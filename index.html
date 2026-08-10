@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ek Surprise Hai 🎉</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#170b28;
+    --bg-mid:#3a1257;
+    --bg-glow:#6a1b6e;
+    --gold:#ffd166;
+    --pink:#ff6f91;
+    --teal:#06d6a0;
+    --cream:#fff6e9;
+    --saffron:#ff9933;
+    --green:#138808;
+    --ink:#2a1240;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;}
+  body{
+    font-family:'Baloo 2', sans-serif;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(255,209,102,0.10), transparent 40%),
+      radial-gradient(circle at 85% 75%, rgba(255,111,145,0.14), transparent 45%),
+      linear-gradient(160deg, var(--bg-deep), var(--bg-mid) 55%, var(--bg-glow));
+    background-attachment:fixed;
+    color:var(--cream);
+    min-height:100vh;
+    overflow-x:hidden;
+    position:relative;
+  }
+  .utility{font-family:'Poppins', sans-serif;}
+
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:radial-gradient(rgba(255,255,255,0.35) 1px, transparent 1px);
+    background-size:60px 60px;
+    opacity:0.25;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  #ambient-layer{
+    position:fixed; inset:0;
+    pointer-events:none;
+    z-index:1;
+    overflow:hidden;
+  }
+  .drift{
+    position:absolute;
+    top:-40px;
+    font-size:22px;
+    opacity:0.55;
+    animation-name:driftDown;
+    animation-timing-function:linear;
+  }
+  @keyframes driftDown{
+    from{ transform:translateY(0) rotate(0deg); }
+    to{ transform:translateY(110vh) rotate(360deg); }
+  }
+
+  .stage{
+    position:relative;
+    z-index:2;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:32px 18px;
+  }
+
+  .screen{
+    display:none;
+    width:100%;
+    max-width:620px;
+    text-align:center;
+    animation:fadeUp 0.6s ease both;
+  }
+  .screen.active{display:block;}
+  @keyframes fadeUp{
+    from{opacity:0; transform:translateY(18px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  .bunting{
+    display:flex;
+    justify-content:center;
+    gap:6px;
+    margin-bottom:18px;
+  }
+  .flag{
+    width:0; height:0;
+    border-left:11px solid transparent;
+    border-right:11px solid transparent;
+    border-top:16px solid var(--gold);
+    opacity:0.9;
+  }
+  .flag:nth-child(2n){border-top-color:var(--pink);}
+  .flag:nth-child(3n){border-top-color:var(--teal);}
+
+  h1{
+    font-size:clamp(28px,6vw,44px);
+    margin:0 0 10px;
+    font-weight:800;
+    line-height:1.2;
+  }
+  h2{
+    font-size:clamp(22px,5vw,32px);
+    margin:0 0 14px;
+    font-weight:700;
+  }
+  p{
+    font-size:clamp(15px,3vw,18px);
+    line-height:1.6;
+    color:#f4e9ff;
+    margin:0 0 18px;
+  }
+  .glow{
+    background:linear-gradient(90deg, var(--gold), var(--pink));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  .card{
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.14);
+    backdrop-filter:blur(6px);
+    border-radius:22px;
+    padding:32px 24px;
+    box-shadow:0 20px 50px rgba(0,0,0,0.35);
+  }
+
+  button, .btn{
+    font-family:'Baloo 2', sans-serif;
+    font-size:17px;
+    font-weight:700;
+    color:var(--ink);
+    background:linear-gradient(90deg, var(--gold), #ffb84d);
+    border:none;
+    padding:13px 28px;
+    border-radius:999px;
+    cursor:pointer;
+    box-shadow:0 8px 20px rgba(255,177,60,0.35);
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+    margin:6px;
+  }
+  button:hover{ transform:translateY(-2px) scale(1.03); }
+  button:active{ transform:translateY(0) scale(0.98); }
+  button.secondary{
+    background:linear-gradient(90deg, var(--pink), #ff9bb8);
+    color:#3a0f22;
+  }
+  button.ghost{
+    background:transparent;
+    border:2px solid rgba(255,255,255,0.5);
+    color:var(--cream);
+    box-shadow:none;
+  }
+  button:disabled{ opacity:0.4; cursor:not-allowed; transform:none; }
+
+  input[type=text]{
+    font-family:'Baloo 2', sans-serif;
+    font-size:18px;
+    padding:12px 16px;
+    border-radius:14px;
+    border:2px solid rgba(255,255,255,0.3);
+    background:rgba(255,255,255,0.9);
+    color:var(--ink);
+    width:80%;
+    max-width:320px;
+    text-align:center;
+    outline:none;
+  }
+  input.shake{ animation:shake 0.4s; border-color:var(--pink); }
+  @keyframes shake{
+    0%,100%{transform:translateX(0);}
+    20%{transform:translateX(-8px);}
+    40%{transform:translateX(8px);}
+    60%{transform:translateX(-6px);}
+    80%{transform:translateX(6px);}
+  }
+
+  .hint{
+    min-height:22px;
+    font-size:14px;
+    color:var(--gold);
+    font-family:'Poppins', sans-serif;
+  }
+
+  .progress{
+    position:fixed;
+    bottom:14px; left:0; right:0;
+    display:flex; justify-content:center; gap:6px;
+    z-index:5;
+  }
+  .progress span{
+    width:7px; height:7px; border-radius:50%;
+    background:rgba(255,255,255,0.25);
+  }
+  .progress span.on{ background:var(--gold); }
+
+  .tricolor-strip{
+    height:8px; width:140px; margin:0 auto 18px;
+    border-radius:4px; overflow:hidden;
+    display:flex;
+  }
+  .tricolor-strip div{ flex:1; }
+  .tricolor-strip .s{background:var(--saffron);}
+  .tricolor-strip .w{background:#fff;}
+  .tricolor-strip .g{background:var(--green);}
+
+  .joke{
+    margin-top:10px;
+    font-style:italic;
+    color:var(--pink);
+  }
+
+  .prank-area{
+    position:relative;
+    height:280px;
+    margin-top:10px;
+  }
+  #prankBtn{
+    position:absolute;
+    transition:top 0.35s ease, left 0.35s ease;
+  }
+
+  .game-area{
+    position:relative;
+    height:380px;
+    border-radius:18px;
+    overflow:hidden;
+    background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.14);
+    margin-bottom:14px;
+  }
+  .balloon{
+    position:absolute;
+    bottom:-70px;
+    font-size:40px;
+    cursor:pointer;
+    animation-name:rise;
+    animation-timing-function:linear;
+    user-select:none;
+  }
+  @keyframes rise{
+    from{ transform:translateY(0) rotate(0deg); }
+    to{ transform:translateY(-440px) rotate(15deg); }
+  }
+  .game-hud{
+    display:flex; justify-content:space-between;
+    font-family:'Poppins', sans-serif; font-size:14px;
+    margin-bottom:8px; color:var(--gold);
+  }
+  .pop-fx{
+    position:absolute;
+    font-size:26px;
+    pointer-events:none;
+    animation:popfx 0.5s ease forwards;
+  }
+  @keyframes popfx{
+    from{ transform:scale(1); opacity:1; }
+    to{ transform:scale(1.8); opacity:0; }
+  }
+
+  .options{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:10px;
+    margin-top:14px;
+  }
+  .opt-btn{
+    background:rgba(255,255,255,0.08);
+    border:2px solid rgba(255,255,255,0.25);
+    color:var(--cream);
+    box-shadow:none;
+  }
+  .opt-btn.correct{ background:var(--teal); color:#04241b; border-color:var(--teal); }
+  .opt-btn.wrong{ background:var(--pink); color:#3a0f22; border-color:var(--pink); }
+
+  .pic-tabs{
+    display:flex; justify-content:center; gap:8px; margin-bottom:10px; flex-wrap:wrap;
+  }
+  .pic-tab{
+    font-family:'Poppins', sans-serif; font-size:13px;
+    background:rgba(255,255,255,0.08); border:2px solid rgba(255,255,255,0.25);
+    color:var(--cream); padding:6px 14px; border-radius:999px; cursor:pointer; box-shadow:none;
+    margin:0;
+  }
+  .pic-tab.active{ background:var(--gold); color:var(--ink); border-color:var(--gold); }
+
+  .color-wrap{
+    position:relative;
+    width:100%;
+    max-width:480px;
+    margin:0 auto;
+    border-radius:16px;
+    overflow:hidden;
+    background:#fff;
+  }
+  .color-wrap canvas{
+    position:absolute; top:0; left:0;
+    width:100%; height:100%;
+    display:block;
+    touch-action:none;
+  }
+  #drawCanvas{ z-index:1; }
+  #outlineCanvas{ z-index:2; pointer-events:none; }
+  .palette{
+    display:flex; justify-content:center; gap:8px; flex-wrap:wrap;
+    margin:14px 0;
+  }
+  .swatch{
+    width:30px; height:30px; border-radius:50%;
+    border:2px solid rgba(255,255,255,0.6);
+    cursor:pointer;
+  }
+  .swatch.active{ outline:3px solid var(--gold); }
+
+  #confettiCanvas{
+    position:fixed; inset:0; z-index:3; pointer-events:none;
+  }
+  .sticker{
+    position:absolute;
+    font-size:30px;
+    animation:floaty 3.5s ease-in-out infinite;
+  }
+  @keyframes floaty{
+    0%,100%{ transform:translateY(0) rotate(-4deg); }
+    50%{ transform:translateY(-14px) rotate(4deg); }
+  }
+  .heart-beat{
+    font-size:60px;
+    animation:beat 1.1s ease-in-out infinite;
+  }
+  @keyframes beat{
+    0%,100%{ transform:scale(1); }
+    50%{ transform:scale(1.18); }
+  }
+
+  .video-embed{
+    margin:16px auto 0;
+    max-width:400px;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,0.4);
+    background:#000;
+  }
+  .video-embed iframe{
+    width:100%;
+    aspect-ratio:16/9;
+    display:block;
+    border:0;
+  }
+  .memory-image {
+    width: 100%;
+    max-width: 450px;
+    height: 500px;
+    margin: 10px auto;
+    overflow-y: auto;
+    border-radius: 16px;
+}
+
+.memory-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 16px;
+}
+</style>
+</head>
+<body>
+
+<div id="ambient-layer"></div>
+<canvas id="confettiCanvas"></canvas>
+<div class="stage">
+
+  <!-- 0: COVER -->
+  <section class="screen active" id="s0">
+    <div class="card">
+      <div class="bunting"><div class="flag"></div><div class="flag"></div><div class="flag"></div><div class="flag"></div><div class="flag"></div></div>
+      <h1>Ek <span class="glow">Surprise</span> Hai Tumhare Liye 🎉</h1>
+      <p>Aankhein khuli rakhna... aage bahut kuch hai. Tumhara din itna special hai ki maine ispe pura ek "level-based game" bana diya — jitna khelogi, utna hi surprise milega (umeed toh hai 😅)</p>
+      <p class="joke" style="margin-top:-6px;">Warning: is website mein 100% prank, 60% pagalpan aur thoda sa mehnat guaranteed hai 😅</p>
+      <button onclick="goTo(1); burstConfetti(40);  playIndepSong();">Chalo, ache se wish karte hai 💛</button>
+    </div>
+  </section>
+
+  <!-- 1: INDEPENDENCE DAY -->
+  <section class="screen" id="s1">
+    <div class="card">
+      <div class="tricolor-strip"><div class="s"></div><div class="w"></div><div class="g"></div></div>
+      <h1>🇮🇳 Happy Independence Day!</h1>
+      <p>Aaj ka din bahut khaas hai, poore desh ke liye...</p>
+      <p class="joke">Sorry sorry — aaj toh Independence Day se bhi zyada important din hai... woh hai <b>aapka Birthday</b>! 🎂✨</p>
+      <audio id="indepSong" src="./independance.mp3"></audio>
+      <button onclick="stopIndepSong(); goTo(2); startCuteVideo();">
+    Aage chalo
+</button>
+    </div>
+  </section>
+
+  <!-- 2: NORMAL WISH (was page 4, now moved here) -->
+  <section class="screen" id="s2">
+    <div class="card">
+      <h1>Happy Birthday <span class="glow">Manvi</span>! 🥳</h1>
+      <p>Tumhara din khushiyon, hansi aur ढेर saari good vibes se bhara rahe. Tum jaisi ho waise hi hamesha chamakti raho ✨</p>
+      <div style="font-size:34px; margin:10px 0;">🎈🎂🎉🎁🎊</div>
+      <div class="video-embed" id="s2VideoWrap"></div>
+      <button onclick="stopCuteVideo(); goTo(3);">Aage chalo</button>
+    </div>
+  </section>
+
+  <!-- 3: CELEBRITY QUIZ (was page 3, now moved here) -->
+  <section class="screen" id="s3">
+    <div class="card">
+      <h2>Ek chhota sa sawaal ☝️</h2>
+      <p>Duniya ki sabse khoobsurat celebrity kaun hai — jiske aage saari heroine bhi fail ho jaati hai?</p>
+      <input type="text" id="celebInput" placeholder="Naam likho..." autocomplete="off">
+      <br>
+      <button onclick="checkCeleb()">Confirm karo</button>
+      <div class="hint utility" id="celebHint"></div>
+      <br>
+      <audio id="correctAnswerAudio" src="correct-answer.mp3" preload="auto"></audio>
+      <button id="celebNext" onclick="stopCorrectAnswerAudio(); goTo(4)" disabled style="opacity:0.35;">Aage badho →</button>
+    </div>
+  </section>
+
+  <!-- 4: PRANK BUTTON -->
+  <section class="screen" id="s4">
+    <div class="card">
+      <h2>Bas ek click aur agla page khul jayega 😌</h2>
+      <p class="utility" id="prankMsg">Neeche wale button ko dabao...</p>
+      <div class="prank-area">
+        <button id="prankBtn" style="top:120px; left:calc(50% - 55px);" onclick="prankClick()">Next →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5: GAME -->
+  <section class="screen" id="s5">
+    <div class="card">
+      <h2>Balloon Pop! 🎈</h2>
+      <p>Jitne balloons pop kar sako karo, time khatam hote hi aage badh jaana.</p>
+      <div class="game-hud utility">
+        <span>Score: <b id="gScore">0</b></span>
+        <span>Time: <b id="gTime">20</b>s</span>
+      </div>
+      <div class="game-area" id="gameArea">
+        <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;" id="gameStartOverlay">
+          <button onclick="startGame()">Game Start Karo 🎈</button>
+        </div>
+      </div>
+      <button id="gameNext" onclick="goTo(6)" style="display:none;">Aage badho →</button>
+    </div>
+  </section>
+
+  <!-- 6: SONGS -->
+  <section class="screen" id="s6">
+    <div class="card">
+      <h2>Gaana toh banta hai 🎵</h2>
+      <p>Time for your favorite song 🎶</p>
+      <button onclick="playWrongAudio()">📢 Song Bajao</button>
+      <audio id="wrongAudio" src="wrong-audio.mp3" preload="auto"></audio>
+
+      <div class="hint utility" id="songHint" style="margin-top:10px;"></div>
+
+<div class="hint utility" id="songHint" style="margin-top:10px;"></div>
+
+<div class="video-embed" id="s6VideoWrap"></div>
+
+<div id="realSongBlock" style="display:none; margin-top:18px;">
+    <button class="ghost" onclick="playFavoriteSong()">
+        🎂 Manvi's Fav song 🎵
+    </button>
+</div>
+<div id="favoriteSongTitle" style="display:none; text-align:center; margin:15px 0 8px;">
+    <h3 style="margin:0;">🎂 Manvi's Fav Song 🎵</h3>
+</div>
+
+<video
+    id="favoriteSong"
+    src="./favorite-song.mp4"
+    playsinline
+    preload="auto"
+    controls
+    style="display:none; width:100%; max-width:420px; border-radius:16px; margin:15px auto;">
+</video>
+
+<br>
+
+<button class="ghost" onclick="goTo(7);">
+    Aage badho →
+</button>
+    </div>
+  </section>
+  <!-- 7: SWEETS QUIZ -->
+  <section class="screen" id="s7">
+    <div class="card">
+      <h2>Ek aur sawaal 🍬</h2>
+      <p>Manvi ki sabse pasandida meethi cheez kaunsi hai?</p>
+      <div class="options" id="sweetOptions"></div>
+      <div class="hint utility" id="sweetHint"></div>
+      <br>
+      <button id="sweetNext" onclick="goTo(8)" disabled style="opacity:0.35;">Aage badho →</button>
+    </div>
+  </section>
+
+  <!-- 8: COLORING -->
+  <section class="screen" id="s8">
+    <div class="card">
+      <h2>Colour Karo 🎨</h2>
+      <p class="utility" style="font-size:14px;">Ungli ya mouse se rang bharo</p>
+      <div class="palette" id="palette"></div>
+      <div class="color-wrap" style="height:320px;">
+        <canvas id="outlineCanvas" width="440" height="320"></canvas>
+        <canvas id="drawCanvas" width="440" height="320"></canvas>
+      </div>
+      <div style="margin-top:12px;">
+        <button class="ghost" onclick="clearDraw()">Saaf karo</button>
+        <button onclick="goTo(9)">Ho gaya, aage chalo 🎉</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9: FINAL WISH -->
+  <section class="screen" id="s9">
+    <div class="card" style="position:relative; overflow:hidden;">
+      <h1><span class="glow">Happy Birthday, Manvi!</span> 🎂🎉</h1>
+      <p>Tumhara aaj ka din bilkul tumhari tarah hi khaas ho — bharpoor pyaar, hansi aur khushiyon se bhara. Yeh saal tumhe wo sab mile jiske tum haqdaar ho 💛</p>
+      <p>Happy birthday once again, Manvi♥️♾️...
+        Thank u to come in this world and in my lyf 💀(cringe hogya)
+        And make our lyf full of happiness....♾️♾️✨
+        God bless u...
+        Archive success in your Life..Happy Birthday again! 🎉 I hope your day is filled with happiness,
+        laughter, and all the things that make you smile✨♥️. You are such a wonderful friend, and I’m really
+        grateful to have you in my life. Your kindness✨, positivity♥️, and support mean a lot to everyone 
+        around you✨⚡. May this new year of your life bring you success, good health💙, and many beautiful 
+        moments❤️. Keep shining✨, keep smiling🎊🔥, and never stop being the amazing person you are. Enjoy 
+        your special day to the fullest💛, make lots of memories🩵, and have an incredible year ahead💗. Once 
+        again, wishing you a very happy birthday! 🎂✨</p>
+
+        <br>
+        <br>
+        <h3>💖 A little memory</h3>
+
+<div class="memory-image">
+    <img src="./screenshot.png" alt="A special memory">
+</div>
+
+<div style="font-size:38px;">🥳🎈🎁</div>
+        <p>ye whi msg hai jo tumne ekdam strting mai kaha tha birthday hai mera aur wish v nhi kiya toh hm 
+          likh kr bheje pr tum sooogyii🥲🥲 , phir boli jyoti ka birthday hai,  tumne kaha tha copy paste kr dena toh 
+          lo kr diya 🫣🫣
+        </p>
+      <div style="font-size:38px;">🥳🎈🎁</div>
+      <button onclick="showFinalStickers(); goTo(10);">Ek aakhri baat suno →</button>
+    </div>
+  </section>
+
+  <!-- 10: LAST PAGE -->
+  <section class="screen" id="s10">
+    <div class="card">
+      <div class="heart-beat">💛</div>
+      <h2>Ek Aakhri Baat...</h2>
+      <p>
+        Manvi, tum jitni achiiiii ho utni hi khaas bhi hoooo. Yeh poora surprise sirf ek chhoti si koshish thi
+        tumhe hasaane ki aur yeh dikhaane ki ki tumhara din kitna matter karta hai.
+        Hamesha aise hi muskurate raho, aur jo bhi chaho wo sab paao. Happy Birthday, dher saari duayein tumhare saath hain 🎂✨
+      </p>
+      <p class="utility" style="font-size:13px; opacity:0.75;">— from anuj </p>
+      <button class="ghost" onclick="closeMiniPlayer(); goTo(0); resetAll();">Fir se dekho ↺</button>
+    </div>
+  </section>
+
+</div>
+
+<div class="progress utility" id="progressDots"></div>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+/* ======= CONFIG (customize here) ======= */
+
+const CONFIG = {
+  correctName: "manvi"
+};
+
+const TOTAL_SCREENS = 11;
+let currentScreen = 0;
+
+function goTo(n){
+  document.getElementById('s'+currentScreen).classList.remove('active');
+  currentScreen = n;
+  document.getElementById('s'+currentScreen).classList.add('active');
+  updateDots();
+  window.scrollTo({top:0, behavior:'smooth'});
+  if (n === 0) {
+  burstConfetti(40);
+}
+  if (n === 9 || n === 10) {
+    startAmbientConfetti();
+} else {
+    stopAmbientConfetti();
+}
+}
+
+function updateDots(){
+  const wrap = document.getElementById('progressDots');
+  wrap.innerHTML = '';
+  for(let i=0;i<TOTAL_SCREENS;i++){
+    const d = document.createElement('span');
+    if(i===currentScreen) d.classList.add('on');
+    wrap.appendChild(d);
+  }
+}
+updateDots();
+// burstConfetti(40);
+setTimeout(() => {
+  burstConfetti(100);
+}, 300);
+
+/* ======= Inline video embeds (visible on the page, not hidden) ======= */
+function embedVideo(containerId, videoId, opts) {
+    opts = opts || {};
+
+    const start = opts.start || 0;
+    const end = opts.end || null;
+
+    let src = "https://www.youtube.com/embed/" + videoId +
+              "?playsinline=1" +
+              "&start=" + start;
+
+    if (end) src += "&end=" + end;
+
+    const el = document.getElementById(containerId);
+    if (!el) return;
+
+    el.innerHTML = `
+        <iframe
+            width="100%"
+            height="200"
+            src="${src}"
+            frameborder="0"
+            allow="autoplay; encrypted-media"
+            allowfullscreen>
+        </iframe>
+    `;
+}
+let cuteVideo;
+
+function startCuteVideo() {
+    const container = document.getElementById("s2VideoWrap");
+
+    if (!container) return;
+
+    container.innerHTML = `
+        <video
+            id="cuteVideo"
+            width="100%"
+            playsinline
+            controls
+            preload="auto">
+            <source src="cute-video.mp4" type="video/mp4">
+        </video>
+    `;
+
+    cuteVideo = document.getElementById("cuteVideo");
+
+    // Pehli baar 3 sec se start
+    cuteVideo.currentTime = 3;
+
+    // Video khatam hote hi dobara 3 sec se start
+    cuteVideo.addEventListener("ended", function () {
+        cuteVideo.currentTime = 3;
+        cuteVideo.play();
+    });
+
+    cuteVideo.play();
+}
+
+function stopCuteVideo() {
+    if (cuteVideo) {
+        cuteVideo.pause();
+        cuteVideo.currentTime = 3;
+        cuteVideo.remove();
+        cuteVideo = null;
+    }
+
+    const container = document.getElementById("s2VideoWrap");
+
+    if (container) {
+        container.innerHTML = "";
+    }
+}
+function closeMiniPlayer(){
+  clearVideo('s1VideoWrap');
+  clearVideo('s2VideoWrap');
+  clearVideo('s6VideoWrap');
+}
+function playIndepSong() {
+    const song = document.getElementById("indepSong");
+
+    if (!song) {
+        console.log("❌ Audio element nahi mila!");
+        return;
+    }
+
+    console.log("✅ Audio mil gaya");
+    console.log("Audio file:", song.src);
+
+    song.currentTime = 0;
+
+    song.play()
+        .then(() => {
+            console.log("🎵 Song play ho gaya!");
+        })
+        .catch(error => {
+            console.log("❌ Song play nahi hua:", error);
+        });
+
+    setTimeout(() => {
+        song.pause();
+        song.currentTime = 0;
+    }, 10000);
+}
+function stopIndepSong() {
+    const song = document.getElementById("indepSong");
+
+    if (!song) return;
+
+    song.pause();
+    song.currentTime = 0;
+}
+function playBirthdaySong(){
+  // TODO: swap in the actual song link once you send it
+  embedVideo('s2VideoWrap', 'PLACEHOLDER_ID', {});
+}
+function playCorrectAnswerAudio() {
+    const audio = document.getElementById("correctAnswerAudio");
+
+    if (!audio) return;
+
+    audio.currentTime = 0;
+    audio.play();
+}
+
+function stopCorrectAnswerAudio() {
+    const audio = document.getElementById("correctAnswerAudio");
+
+    if (!audio) return;
+
+    audio.pause();
+    audio.currentTime = 0;
+}
+function playWrongAudio() {
+    const audio = document.getElementById("wrongAudio");
+
+    if (!audio) return;
+
+    audio.currentTime = 0;
+
+    audio.play();
+
+    audio.onended = function () {
+        alert("Sorry sorry 😭😂 Ab pakka! Favourite song ke liye click karo ❤️");
+        playFavoriteSong();
+    };
+}
+function playFavoriteSong() {
+    const video = document.getElementById("favoriteSong");
+    const title = document.getElementById("favoriteSongTitle");
+
+    if (!video) return;
+
+    // Title dikhao
+    if (title) {
+        title.style.display = "block";
+    }
+
+    // Video dikhao
+    video.style.display = "block";
+
+    video.currentTime = 0;
+    video.play();
+}
+
+function stopFavoriteSong() {
+    const video = document.getElementById("favoriteSong");
+    const title = document.getElementById("favoriteSongTitle");
+
+    if (!video) return;
+
+    // Title chhupao
+    if (title) {
+        title.style.display = "none";
+    }
+
+    // Video chhupao
+    video.style.display = "none";
+
+    video.pause();
+    video.currentTime = 0;
+    video.style.display = "none";
+}
+function nextAfterFavoriteSong() {
+    const video = document.getElementById("favoriteSong");
+
+    if (video) {
+        video.pause();
+        video.currentTime = 0;
+        video.style.display = "none";
+    }
+
+    goTo(7);
+}
+/* ======= Ambient drifting emojis ======= */
+const driftEmojis = ['🎈','🎉','✨','🎊','💛'];
+function spawnDrift(){
+  const el = document.createElement('div');
+  el.className = 'drift';
+  el.textContent = driftEmojis[Math.floor(Math.random()*driftEmojis.length)];
+  el.style.left = Math.random()*100 + 'vw';
+  const dur = 6 + Math.random()*6;
+  el.style.animationDuration = dur + 's';
+  document.getElementById('ambient-layer').appendChild(el);
+  setTimeout(()=> el.remove(), dur*1000 + 200);
+}
+setInterval(spawnDrift, 900);
+
+/* ======= Confetti burst (canvas) ======= */
+const confettiCanvas = document.getElementById('confettiCanvas');
+const cctx = confettiCanvas.getContext('2d');
+function resizeConfetti(){
+  confettiCanvas.width = window.innerWidth;
+  confettiCanvas.height = window.innerHeight;
+}
+resizeConfetti();
+window.addEventListener('resize', resizeConfetti);
+
+let confettiParticles = [];
+const confettiColors = ['#ffd166','#ff6f91','#06d6a0','#ff9933','#ffffff'];
+function burstConfetti(count){
+  count = count || 120;
+  for(let i=0;i<count;i++){
+    confettiParticles.push({
+      x: Math.random()*confettiCanvas.width,
+      y: -20 - Math.random()*200,
+      vx: (Math.random()-0.5)*3,
+      vy: 2 + Math.random()*3,
+      size: 4 + Math.random()*5,
+      color: confettiColors[Math.floor(Math.random()*confettiColors.length)],
+      rot: Math.random()*360,
+      vr: (Math.random()-0.5)*8,
+      life: 0
+    });
+  }
+}
+function confettiLoop(){
+  cctx.clearRect(0,0,confettiCanvas.width, confettiCanvas.height);
+  confettiParticles.forEach(p=>{
+    p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.life++;
+    cctx.save();
+    cctx.translate(p.x,p.y);
+    cctx.rotate(p.rot*Math.PI/180);
+    cctx.fillStyle = p.color;
+    cctx.fillRect(-p.size/2,-p.size/2,p.size,p.size);
+    cctx.restore();
+  });
+  confettiParticles = confettiParticles.filter(p=> p.y < confettiCanvas.height + 40 && p.life < 500);
+  requestAnimationFrame(confettiLoop);
+}
+confettiLoop();
+
+let ambientConfettiTimer = null;
+function startAmbientConfetti(){
+  if(ambientConfettiTimer) return;
+  ambientConfettiTimer = setInterval(()=> burstConfetti(18), 500);
+}
+function stopAmbientConfetti(){
+  clearInterval(ambientConfettiTimer);
+  ambientConfettiTimer = null;
+}
+
+/* ======= Web Audio helper sounds ======= */
+let audioCtx = null;
+function getCtx(){
+  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+function playTone(freq, start, dur, type, gain){
+  type = type || 'sine';
+  gain = gain === undefined ? 0.15 : gain;
+  const ctx = getCtx();
+  const osc = ctx.createOscillator();
+  const g = ctx.createGain();
+  osc.type = type;
+  osc.frequency.value = freq;
+  g.gain.value = gain;
+  osc.connect(g); g.connect(ctx.destination);
+  osc.start(ctx.currentTime + start);
+  osc.stop(ctx.currentTime + start + dur);
+}
+function playCelebration(){
+  playTone(523.25,0,0.15,'triangle',0.18);
+  playTone(659.25,0.12,0.15,'triangle',0.18);
+  playTone(783.99,0.24,0.15,'triangle',0.18);
+  playTone(1046.5,0.36,0.35,'triangle',0.2);
+}
+function playBoomOnce(delay){
+  const ctx = getCtx();
+  const osc = ctx.createOscillator();
+  const g = ctx.createGain();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(160, ctx.currentTime + delay);
+  osc.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + delay + 0.22);
+  g.gain.setValueAtTime(0.35, ctx.currentTime + delay);
+  g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 0.28);
+  osc.connect(g); g.connect(ctx.destination);
+  osc.start(ctx.currentTime + delay);
+  osc.stop(ctx.currentTime + delay + 0.3);
+}
+function playBoomBoom(){
+  playBoomOnce(0);
+  playBoomOnce(0.12);
+}
+function playTryAgainSound(){
+  playTone(300,0,0.1,'square',0.12);
+  playTone(200,0.1,0.16,'square',0.12);
+}
+
+/* ======= Screen 3: Celebrity quiz ======= */
+let celebTries = 0;
+function checkCeleb(){
+  const val = document.getElementById('celebInput').value.trim().toLowerCase();
+  const hintEl = document.getElementById('celebHint');
+  if(val === CONFIG.correctName){
+    playCorrectAnswerAudio();
+    hintEl.textContent = "Bilkul sahi! 😍";
+    const nextBtn = document.getElementById('celebNext');
+    nextBtn.disabled = false;
+    nextBtn.style.opacity = '1';
+    burstConfetti(80);
+    playCelebration();
+  } else {
+    celebTries++;
+    document.getElementById('celebInput').classList.remove('shake');
+    void document.getElementById('celebInput').offsetWidth;
+    document.getElementById('celebInput').classList.add('shake');
+    const hints = [
+      "Hmm... phir se socho 🤔",
+      "Arre wahi jo yeh page dekh rahi hai 👀",
+      "Hint: naam 'M' se shuru hota hai...",
+      "Bas thoda aur socho, bilkul paas ho!"
+    ];
+    hintEl.textContent = hints[Math.min(celebTries-1, hints.length-1)];
+  }
+}
+
+/* ======= Screen 4: Prank button ======= */
+let prankStage = 0;
+const MAX_MOVES = 6;
+function prankClick(){
+  const btn = document.getElementById('prankBtn');
+  const area = btn.parentElement;
+  const msg = document.getElementById('prankMsg');
+
+  if(prankStage < MAX_MOVES){
+    prankStage++;
+    playTryAgainSound();
+    const areaW = area.clientWidth, areaH = area.clientHeight;
+    const btnW = btn.offsetWidth || 110, btnH = btn.offsetHeight || 46;
+    const maxLeft = Math.max(areaW - btnW, 10);
+    const maxTop = Math.max(areaH - btnH, 10);
+    btn.style.left = Math.random()*maxLeft + 'px';
+    btn.style.top = Math.random()*maxTop + 'px';
+    btn.style.width = '';
+    const teases = ["Pakad ke dikhao 😜","Aaya paas... nahi! 😂","Thoda aur try karo","Haha miss ho gaya!","Bas ek aur try!","Almost there... nahi 😅"];
+    msg.textContent = teases[(prankStage-1) % teases.length];
+  } else if(prankStage === MAX_MOVES){
+    prankStage++;
+    playTryAgainSound();
+    btn.style.left = 'calc(50% - 100px)';
+    btn.style.top = '90px';
+    btn.style.width = '200px';
+    btn.textContent = "Acha theek hai, final next pakka";
+    msg.textContent = "";
+  } else if(prankStage === MAX_MOVES+1){
+    prankStage++;
+    playTryAgainSound();
+    btn.style.left = 'calc(50% - 110px)';
+    btn.style.top = '200px';
+    btn.style.width = '220px';
+    btn.textContent = "Is baar pakka wish karunga 🤞";
+  } else {
+    playCelebration();
+    goTo(5);
+  }
+}
+
+/* ======= Screen 5: Balloon game ======= */
+let gameActive = false;
+let gScore = 0;
+let gameSpawnTimer = null;
+let gameCountdownTimer = null;
+const balloonEmojis = ['🎈','🎈','🎈','🎁','🎂'];
+function startGame(){
+  document.getElementById('gameStartOverlay').style.display = 'none';
+  gameActive = true;
+  gScore = 0;
+  document.getElementById('gScore').textContent = '0';
+  let timeLeft = 20;
+  document.getElementById('gTime').textContent = timeLeft;
+
+  gameSpawnTimer = setInterval(spawnBalloon, 650);
+  gameCountdownTimer = setInterval(()=>{
+    timeLeft--;
+    document.getElementById('gTime').textContent = Math.max(timeLeft,0);
+    if(timeLeft <= 0){
+      endGame();
+    }
+  }, 1000);
+}
+function spawnBalloon(){
+  const area = document.getElementById('gameArea');
+  const b = document.createElement('div');
+  b.className = 'balloon';
+  b.textContent = balloonEmojis[Math.floor(Math.random()*balloonEmojis.length)];
+  b.style.left = (5 + Math.random()*85) + '%';
+  const dur = 3 + Math.random()*2.5;
+  b.style.animationDuration = dur + 's';
+  b.onclick = ()=>{
+    gScore++;
+    document.getElementById('gScore').textContent = gScore;
+    playBoomBoom();
+    const fx = document.createElement('div');
+    fx.className = 'pop-fx';
+    fx.textContent = '✨';
+    fx.style.left = b.style.left;
+    fx.style.bottom = getComputedStyle(b).bottom;
+    area.appendChild(fx);
+    setTimeout(()=> fx.remove(), 500);
+    b.remove();
+  };
+  area.appendChild(b);
+  setTimeout(()=>{ if(b.parentElement) b.remove(); }, dur*1000 + 100);
+}
+function endGame(){
+  gameActive = false;
+  clearInterval(gameSpawnTimer);
+  clearInterval(gameCountdownTimer);
+  document.getElementById('gameNext').style.display = 'inline-block';
+}
+
+/* ======= Screen 6: Songs ======= */
+function playPrankVideo(){
+  embedVideo('s6VideoWrap', '1nxR7E8d8z4', {});
+  document.getElementById('songHint').textContent = "Hehe gotcha! 😂 ab asli wala sunte hai...";
+  document.getElementById('realSongBlock').style.display = 'block';
+}
+function playRealSong(){
+  embedVideo('s6VideoWrap', 'dXoKnCqzI8I', {start:117, end:160});
+}
+
+/* ======= Screen 7: Sweets quiz (dual correct answer) ======= */
+const sweetChoices = ['Rasmalai','Gulab Jamun','Nariyal Laddu','Kaju Katli','Jalebi'];
+const correctSweets = new Set(['Rasmalai','Nariyal Laddu']);
+let foundSweets = new Set();
+function renderSweetOptions(){
+  const wrap = document.getElementById('sweetOptions');
+  wrap.innerHTML = '';
+  sweetChoices.forEach(name=>{
+    const b = document.createElement('button');
+    b.className = 'opt-btn';
+    b.textContent = name;
+    b.onclick = ()=> checkSweet(name, b);
+    wrap.appendChild(b);
+  });
+}
+renderSweetOptions();
+function checkSweet(name, btn){
+  const hint = document.getElementById('sweetHint');
+  if(correctSweets.has(name)){
+    if(foundSweets.has(name)) return;
+    foundSweets.add(name);
+    btn.classList.add('correct');
+    playCelebration();
+    burstConfetti(40);
+    if(foundSweets.size < correctSweets.size){
+      hint.textContent = "One more please Manvi 😭";
+    } else {
+      hint.textContent = "Yesss dono sahi! 🎉";
+      const nextBtn = document.getElementById('sweetNext');
+      nextBtn.disabled = false;
+      nextBtn.style.opacity = '1';
+    }
+  } else {
+    btn.classList.add('wrong');
+    hint.textContent = "Nahi... phir try karo!";
+    setTimeout(()=> btn.classList.remove('wrong'), 600);
+  }
+}
+
+/* ======= Screen 8: Coloring (multiple pictures) ======= */
+const outlineCanvas = document.getElementById('outlineCanvas');
+const drawCanvas = document.getElementById('drawCanvas');
+const octx = outlineCanvas.getContext('2d');
+const dctx = drawCanvas.getContext('2d');
+let currentColor = '#ff6f91';
+let drawing = false;
+
+/* Each shape function draws using its own original local coordinate system.
+   drawCombinedOutline() places all three into one scene using save/translate/scale,
+   so nothing needed to change inside the shapes themselves. */
+function cakeShape(){
+  octx.lineWidth = 6;
+  octx.lineJoin = 'round';
+  octx.beginPath();
+  octx.ellipse(220,270,140,16,0,0,Math.PI*2);
+  octx.stroke();
+  octx.strokeRect(120,190,200,70);
+  octx.strokeRect(150,120,140,70);
+  octx.strokeRect(210,80,10,40);
+  octx.beginPath();
+  octx.ellipse(215,72,8,12,0,0,Math.PI*2);
+  octx.stroke();
+  for(let i=0;i<5;i++){
+    octx.beginPath();
+    octx.ellipse(140+i*40,155,6,6,0,0,Math.PI*2);
+    octx.stroke();
+  }
+}
+function balloonShape(){
+  octx.lineWidth = 6;
+  octx.lineJoin = 'round';
+  octx.beginPath();
+  octx.ellipse(220,120,80,100,0,0,Math.PI*2);
+  octx.stroke();
+  octx.beginPath();
+  octx.moveTo(208,215);
+  octx.lineTo(220,232);
+  octx.lineTo(232,215);
+  octx.closePath();
+  octx.stroke();
+  octx.beginPath();
+  octx.moveTo(220,232);
+  octx.quadraticCurveTo(195,270,220,300);
+  octx.stroke();
+  octx.beginPath();
+  octx.ellipse(188,88,15,26,-0.35,0,Math.PI*2);
+  octx.stroke();
+}
+function giftShape(){
+  octx.lineWidth = 6;
+  octx.lineJoin = 'round';
+  octx.strokeRect(130,140,180,130);
+  octx.strokeRect(115,110,210,35);
+  octx.beginPath();
+  octx.moveTo(220,110); octx.lineTo(220,270);
+  octx.stroke();
+  octx.beginPath();
+  octx.moveTo(115,127); octx.lineTo(325,127);
+  octx.stroke();
+  octx.beginPath();
+  octx.ellipse(195,90,26,20,0.4,0,Math.PI*2);
+  octx.stroke();
+  octx.beginPath();
+  octx.ellipse(245,90,26,20,-0.4,0,Math.PI*2);
+  octx.stroke();
+}
+
+function drawCombinedOutline(){
+  octx.clearRect(0,0,440,320);
+  octx.strokeStyle = '#2a1240';
+
+  octx.save();
+  octx.translate(-55,0);
+  octx.scale(0.5,0.5);
+  balloonShape();
+  octx.restore();
+
+  octx.save();
+  octx.translate(55.6,109.2);
+  octx.scale(0.68,0.68);
+  cakeShape();
+  octx.restore();
+
+  octx.save();
+  octx.translate(241,-19);
+  octx.scale(0.6,0.6);
+  giftShape();
+  octx.restore();
+}
+drawCombinedOutline();
+
+/* Robust position + drawing handlers: uses Pointer Events where available,
+   with mouse + touch fallback for browsers/webviews (e.g. some in-app
+   WhatsApp/Instagram browsers) that don't fire pointer events reliably —
+   this was the actual reason coloring wasn't registering for some users. */
+function getPos(clientX, clientY){
+  const rect = drawCanvas.getBoundingClientRect();
+  const cx = clientX - rect.left;
+  const cy = clientY - rect.top;
+  return {x: cx * (drawCanvas.width/rect.width), y: cy * (drawCanvas.height/rect.height)};
+}
+function startDrawAt(x,y){
+  drawing = true;
+  dctx.beginPath();
+  dctx.moveTo(x,y);
+}
+function moveDrawTo(x,y){
+  if(!drawing) return;
+  dctx.lineTo(x,y);
+  dctx.strokeStyle = currentColor;
+  dctx.lineWidth = 10;
+  dctx.lineCap = 'round';
+  dctx.lineJoin = 'round';
+  dctx.stroke();
+}
+function endDraw(){ drawing = false; }
+
+function handlePointerDown(e){
+  const p = getPos(e.clientX, e.clientY);
+  try{ drawCanvas.setPointerCapture(e.pointerId); }catch(err){}
+  startDrawAt(p.x, p.y);
+  e.preventDefault();
+}
+function handlePointerMove(e){
+  if(!drawing) return;
+  const p = getPos(e.clientX, e.clientY);
+  moveDrawTo(p.x, p.y);
+  e.preventDefault();
+}
+function handleTouchStart(e){
+  if(!e.touches || !e.touches[0]) return;
+  const t = e.touches[0];
+  const p = getPos(t.clientX, t.clientY);
+  startDrawAt(p.x, p.y);
+  e.preventDefault();
+}
+function handleTouchMove(e){
+  if(!drawing || !e.touches || !e.touches[0]) return;
+  const t = e.touches[0];
+  const p = getPos(t.clientX, t.clientY);
+  moveDrawTo(p.x, p.y);
+  e.preventDefault();
+}
+function handleMouseDown(e){
+  const p = getPos(e.clientX, e.clientY);
+  startDrawAt(p.x, p.y);
+}
+function handleMouseMove(e){
+  if(!drawing) return;
+  const p = getPos(e.clientX, e.clientY);
+  moveDrawTo(p.x, p.y);
+}
+
+if(window.PointerEvent){
+  drawCanvas.addEventListener('pointerdown', handlePointerDown);
+  drawCanvas.addEventListener('pointermove', handlePointerMove);
+  drawCanvas.addEventListener('pointerup', endDraw);
+  drawCanvas.addEventListener('pointercancel', endDraw);
+  drawCanvas.addEventListener('pointerleave', endDraw);
+}
+drawCanvas.addEventListener('touchstart', handleTouchStart, {passive:false});
+drawCanvas.addEventListener('touchmove', handleTouchMove, {passive:false});
+drawCanvas.addEventListener('touchend', endDraw);
+drawCanvas.addEventListener('touchcancel', endDraw);
+drawCanvas.addEventListener('mousedown', handleMouseDown);
+drawCanvas.addEventListener('mousemove', handleMouseMove);
+window.addEventListener('mouseup', endDraw);
+
+const paletteColors = ['#ff6f91','#ffd166','#06d6a0','#4d7cff','#ff9933','#a55eea','#2a1240','#ffffff'];
+function renderPalette(){
+  const wrap = document.getElementById('palette');
+  wrap.innerHTML = '';
+  paletteColors.forEach((c,i)=>{
+    const s = document.createElement('div');
+    s.className = 'swatch' + (i===0 ? ' active' : '');
+    s.style.background = c;
+    s.onclick = ()=>{
+      currentColor = c;
+      document.querySelectorAll('.swatch').forEach(el=> el.classList.remove('active'));
+      s.classList.add('active');
+    };
+    wrap.appendChild(s);
+  });
+}
+renderPalette();
+function clearDraw(){ dctx.clearRect(0,0,drawCanvas.width,drawCanvas.height); }
+
+/* ======= Screen 9: Final wish stickers ======= */
+let stickersShown = false;
+function showFinalStickers(){
+  if(stickersShown) return;
+  stickersShown = true;
+  const card = document.querySelector('#s9 .card');
+  const stickerEmojis = ['🎈','✨','🎉','🎁','💛','🎊'];
+  stickerEmojis.forEach((em,i)=>{
+    const s = document.createElement('div');
+    s.className = 'sticker';
+    s.textContent = em;
+    s.style.left = (8 + i*15) + '%';
+    s.style.top = (i%2===0 ? '6%' : '82%');
+    s.style.animationDelay = (i*0.3) + 's';
+    card.appendChild(s);
+  });
+  startAmbientConfetti();
+}
+
+/* ======= Reset ======= */
+function resetAll(){
+  celebTries = 0;
+  document.getElementById('celebInput').value = '';
+  document.getElementById('celebHint').textContent = '';
+  document.getElementById('celebNext').disabled = true;
+  document.getElementById('celebNext').style.opacity = '0.35';
+
+  prankStage = 0;
+  const btn = document.getElementById('prankBtn');
+  btn.style.width = '';
+  btn.style.top = '120px';
+  btn.style.left = 'calc(50% - 55px)';
+  btn.textContent = 'Next →';
+  document.getElementById('prankMsg').textContent = 'Neeche wale button ko dabao...';
+
+  clearInterval(gameSpawnTimer);
+  clearInterval(gameCountdownTimer);
+  document.getElementById('gameArea').querySelectorAll('.balloon').forEach(b=>b.remove());
+  document.getElementById('gameStartOverlay').style.display = 'flex';
+  document.getElementById('gameNext').style.display = 'none';
+
+  document.getElementById('songHint').textContent = '';
+  document.getElementById('realSongBlock').style.display = 'none';
+
+  foundSweets = new Set();
+  document.getElementById('sweetHint').textContent = '';
+  document.getElementById('sweetNext').disabled = true;
+  document.getElementById('sweetNext').style.opacity = '0.35';
+  renderSweetOptions();
+
+  clearDraw();
+}
+</script>
+</body>
+</html>
