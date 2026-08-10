@@ -371,6 +371,47 @@
     display: block;
     border-radius: 16px;
 }
+.audio-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+}
+
+.audio-popup-box {
+  width: min(90%, 400px);
+  padding: 30px 22px;
+  text-align: center;
+  border-radius: 22px;
+  background: rgba(30, 15, 55, 0.95);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  animation: popupIn 0.4s ease;
+}
+
+.audio-popup-box h2 {
+  margin: 10px 0;
+}
+
+.audio-popup-box p {
+  opacity: 0.85;
+  margin-bottom: 20px;
+}
+
+@keyframes popupIn {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 </style>
 </head>
 <body>
@@ -380,12 +421,26 @@
 <div class="stage">
 
   <!-- 0: COVER -->
+   <div id="audioPopup" class="audio-popup">
+  <div class="audio-popup-box">
+    <div style="font-size:45px;">🎁</div>
+
+    <h2>HAPPY Birthday Manvi♾️ ! 😭💛</h2>
+
+    <p>Pehle ek chhoti si cheez karni hai...</p>
+
+    <button onclick="enterWithMusic();">
+      🎵 Surprise dekho 💛
+    </button>
+  </div>
+</div>
   <section class="screen active" id="s0">
     <div class="card">
+      <audio id="audio1" src="./audio1.mp3" loop preload="auto"></audio>
       <div class="bunting"><div class="flag"></div><div class="flag"></div><div class="flag"></div><div class="flag"></div><div class="flag"></div></div>
       <h1>Ek <span class="glow">Surprise</span> Hai Tumhare Liye 🎉</h1>
       <p>Aankhein khuli rakhna... aage bahut kuch hai. Tumhara din itna special hai ki maine ispe pura ek "level-based game" bana diya — jitna khelogi, utna hi surprise milega (umeed toh hai 😅)</p>
-      <p class="joke" style="margin-top:-6px;">Warning: is website mein 100% prank, 60% pagalpan aur thoda sa mehnat guaranteed hai 😅</p>
+      <p class="joke" style="margin-top:-6px;">Warning: is website mein 100% prank, 60% pagalpan aur thoda sa mehnat hai 😅</p>
       <button onclick="goTo(1); burstConfetti(40);  playIndepSong();">Chalo, ache se wish karte hai 💛</button>
     </div>
   </section>
@@ -411,15 +466,16 @@
       <p>Tumhara din khushiyon, hansi aur ढेर saari good vibes se bhara rahe. Tum jaisi ho waise hi hamesha chamakti raho ✨</p>
       <div style="font-size:34px; margin:10px 0;">🎈🎂🎉🎁🎊</div>
       <div class="video-embed" id="s2VideoWrap"></div>
-      <button onclick="stopCuteVideo(); goTo(3);">Aage chalo</button>
+      <button onclick="burstConfetti(40); stopCuteVideo(); goTo(3);">Aage chalo</button>
     </div>
   </section>
 
   <!-- 3: CELEBRITY QUIZ (was page 3, now moved here) -->
   <section class="screen" id="s3">
     <div class="card">
-      <h2>Ek chhota sa sawaal ☝️</h2>
-      <p>Duniya ki sabse khoobsurat celebrity kaun hai — jiske aage saari heroine bhi fail ho jaati hai?</p>
+      <audio id="s3Audio" src="./s3-song.mp3" preload="auto"></audio>
+      <h2>One little question ☝️</h2>
+      <p>Who is the most beautiful celebrity in the world — jiske aage saari heroine bhi fail ho jaati hai?😊💛</p>
       <input type="text" id="celebInput" placeholder="Naam likho..." autocomplete="off">
       <br>
       <button onclick="checkCeleb()">Confirm karo</button>
@@ -433,10 +489,10 @@
   <!-- 4: PRANK BUTTON -->
   <section class="screen" id="s4">
     <div class="card">
-      <h2>Bas ek click aur agla page khul jayega 😌</h2>
+      <h2>Just one more click, and the next surprise awaits you. ✨</h2>
       <p class="utility" id="prankMsg">Neeche wale button ko dabao...</p>
       <div class="prank-area">
-        <button id="prankBtn" style="top:120px; left:calc(50% - 55px);" onclick="prankClick()">Next →</button>
+        <button id="prankBtn" style="top:120px; left:calc(50% - 55px);" onclick="burstConfetti(40); prankClick()">Next →</button>
       </div>
     </div>
   </section>
@@ -444,6 +500,7 @@
   <!-- 5: GAME -->
   <section class="screen" id="s5">
     <div class="card">
+      <audio id="s5Audio" src="./s5-song.mp3" preload="auto"></audio>
       <h2>Balloon Pop! 🎈</h2>
       <p>Jitne balloons pop kar sako karo, time khatam hote hi aage badh jaana.</p>
       <div class="game-hud utility">
@@ -452,7 +509,7 @@
       </div>
       <div class="game-area" id="gameArea">
         <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;" id="gameStartOverlay">
-          <button onclick="startGame()">Game Start Karo 🎈</button>
+          <button onclick="burstConfetti(40); startGame()">Game Start Karo 🎈</button>
         </div>
       </div>
       <button id="gameNext" onclick="goTo(6)" style="display:none;">Aage badho →</button>
@@ -493,7 +550,7 @@
 
 <br>
 
-<button class="ghost" onclick="goTo(7);">
+<button class="ghost" onclick="stopFavoriteSong(); goTo(7);">
     Aage badho →
 </button>
     </div>
@@ -501,8 +558,9 @@
   <!-- 7: SWEETS QUIZ -->
   <section class="screen" id="s7">
     <div class="card">
-      <h2>Ek aur sawaal 🍬</h2>
-      <p>Manvi ki sabse pasandida meethi cheez kaunsi hai?</p>
+      <audio id="s7s8Audio" src="./s7-s8-song.mp3" preload="auto"></audio>
+      <h2>One more question 🍬</h2>
+      <p>What is Manvi’s favorite sweet? 🍬</p>
       <div class="options" id="sweetOptions"></div>
       <div class="hint utility" id="sweetHint"></div>
       <br>
@@ -513,8 +571,8 @@
   <!-- 8: COLORING -->
   <section class="screen" id="s8">
     <div class="card">
-      <h2>Colour Karo 🎨</h2>
-      <p class="utility" style="font-size:14px;">Ungli ya mouse se rang bharo</p>
+      <h2>You said you like coloring, so here you go—have fun with it! 🎨💛 🎨</h2>
+      <p class="utility" style="font-size:14px;">mouse se colors bharo</p>
       <div class="palette" id="palette"></div>
       <div class="color-wrap" style="height:320px;">
         <canvas id="outlineCanvas" width="440" height="320"></canvas>
@@ -530,9 +588,10 @@
   <!-- 9: FINAL WISH -->
   <section class="screen" id="s9">
     <div class="card" style="position:relative; overflow:hidden;">
+      <audio id="s9s10Audio" src="./s9-s10-song.mp3" preload="auto"></audio>
       <h1><span class="glow">Happy Birthday, Manvi!</span> 🎂🎉</h1>
       <p>Tumhara aaj ka din bilkul tumhari tarah hi khaas ho — bharpoor pyaar, hansi aur khushiyon se bhara. Yeh saal tumhe wo sab mile jiske tum haqdaar ho 💛</p>
-      <p>Happy birthday once again, Manvi♥️♾️...
+      <p>Happy birthday once again, Manvi💛♾️...
         Thank u to come in this world and in my lyf 💀(cringe hogya)
         And make our lyf full of happiness....♾️♾️✨
         God bless u...
@@ -568,10 +627,22 @@
       <div class="heart-beat">💛</div>
       <h2>Ek Aakhri Baat...</h2>
       <p>
-        Manvi, tum jitni achiiiii ho utni hi khaas bhi hoooo. Yeh poora surprise sirf ek chhoti si koshish thi
-        tumhe hasaane ki aur yeh dikhaane ki ki tumhara din kitna matter karta hai.
+        Manvi, tum jitni achiiiii ho utni hi khaas bhi hoooo. Yeh poora surprise sirf ek chhota sa koshish tha
+        tumhe hasaane ki aur yeh dikhaane ki ki tumhara din kitna important hai kyuki independance day hai...😅😂
+        <br>
+        <br>
+        Acha haa reels dekhte dekhte ek line mila jo same mera pov tumhare liye wo ye hai ki :
+        <br>
+        <br>"
+        find me when ur friends let u down 🤝, find me when the world feels too heavy to carry alone 🙃, And when 
+        ur heart feels like it's breaking💔 when you are exhausted from being strong when the silence gets loud 
+        and no one hears u "FIND ME" , I DONT know if i can fix everything but i promise u won't face it alone ,I will 
+        sit with u in the dark and remind u of ur light and stay until u smile slowly finds it's way back ..
+        you are never a burden to me , never !!!☺️"
+        hmko pta hai itna english padh kr gariyaa toh di hi hogi abhi tk 🫣, khair !!!😋😋
         Hamesha aise hi muskurate raho, aur jo bhi chaho wo sab paao. Happy Birthday, dher saari duayein tumhare saath hain 🎂✨
       </p>
+      <h3>YOU HAPPY , ALL HAPPY 🤩🤌</h3>
       <p class="utility" style="font-size:13px; opacity:0.75;">— from anuj </p>
       <button class="ghost" onclick="closeMiniPlayer(); goTo(0); resetAll();">Fir se dekho ↺</button>
     </div>
@@ -592,20 +663,105 @@ const CONFIG = {
 const TOTAL_SCREENS = 11;
 let currentScreen = 0;
 
-function goTo(n){
-  document.getElementById('s'+currentScreen).classList.remove('active');
+function goTo(n) {
+
+   if (n !== 0) {
+    const audio = document.getElementById("audio1");
+
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+  }
+
+  document.getElementById('s' + currentScreen).classList.remove('active');
   currentScreen = n;
-  document.getElementById('s'+currentScreen).classList.add('active');
-  updateDots();
-  window.scrollTo({top:0, behavior:'smooth'});
-  if (n === 0) {
-  burstConfetti(40);
+  if (n === 9) {
+  const song = document.getElementById("s9s10Audio");
+
+  if (song) {
+    song.loop = true;
+    song.currentTime = 0;
+    song.play();
+  }
 }
+if (n !== 9 && n !== 10) {
+  const song = document.getElementById("s9s10Audio");
+
+  if (song) {
+    song.pause();
+    song.currentTime = 0;
+  }
+}
+  if (n === 7) {
+  const song = document.getElementById("s7s8Audio");
+
+  if (song) {
+    song.loop = true;
+    song.currentTime = 0;
+    song.play();
+  }
+}
+if (n === 9) {
+  const song = document.getElementById("s7s8Audio");
+
+  if (song) {
+    song.pause();
+    song.currentTime = 0;
+  }
+}
+  if (n === 5) {
+  const song = document.getElementById("s5Audio");
+
+  if (song) {
+    song.loop = true;
+    song.currentTime = 0;
+    song.play();
+  }
+}
+if (n !== 5) {
+  const song = document.getElementById("s5Audio");
+
+  if (song) {
+    song.pause();
+    song.currentTime = 0;
+  }
+}
+  document.getElementById('s' + currentScreen).classList.add('active');
+  if (n === 3) {
+  const song = document.getElementById("s3Audio");
+
+  if (song) {
+    song.loop = true;
+    song.currentTime = 0;
+    song.play();
+  }
+}
+if (n !== 3) {
+  const song = document.getElementById("s3Audio");
+
+  if (song) {
+    song.pause();
+    song.currentTime = 0;
+  }
+}
+
+  updateDots();
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+
+  if (n === 0) {
+    burstConfetti(40);
+  }
+
   if (n === 9 || n === 10) {
     startAmbientConfetti();
-} else {
+  } else {
     stopAmbientConfetti();
-}
+  }
 }
 
 function updateDots(){
@@ -650,6 +806,7 @@ function embedVideo(containerId, videoId, opts) {
         </iframe>
     `;
 }
+
 let cuteVideo;
 
 function startCuteVideo() {
@@ -702,30 +859,26 @@ function closeMiniPlayer(){
   clearVideo('s6VideoWrap');
 }
 function playIndepSong() {
-    const song = document.getElementById("indepSong");
+  const song = document.getElementById("indepSong");
 
-    if (!song) {
-        console.log("❌ Audio element nahi mila!");
-        return;
-    }
+  if (!song) {
+    console.log("❌ Audio element nahi mila!");
+    return;
+  }
 
-    console.log("✅ Audio mil gaya");
-    console.log("Audio file:", song.src);
+  console.log("✅ Audio mil gaya");
+  console.log("Audio file:", song.src);
 
-    song.currentTime = 0;
+  song.loop = true;
+  song.currentTime = 0;
 
-    song.play()
-        .then(() => {
-            console.log("🎵 Song play ho gaya!");
-        })
-        .catch(error => {
-            console.log("❌ Song play nahi hua:", error);
-        });
-
-    setTimeout(() => {
-        song.pause();
-        song.currentTime = 0;
-    }, 10000);
+  song.play()
+    .then(() => {
+      console.log("🎵 Song play ho gaya!");
+    })
+    .catch(error => {
+      console.log("❌ Song play nahi hua:", error);
+    });
 }
 function stopIndepSong() {
     const song = document.getElementById("indepSong");
@@ -750,6 +903,14 @@ function playCorrectAnswerAudio() {
 
 function stopCorrectAnswerAudio() {
     const audio = document.getElementById("correctAnswerAudio");
+
+    if (!audio) return;
+
+    audio.pause();
+    audio.currentTime = 0;
+}
+function stopFavoriteSong() {
+    const audio = document.getElementById("favoriteSong");
 
     if (!audio) return;
 
@@ -816,6 +977,34 @@ function nextAfterFavoriteSong() {
     }
 
     goTo(7);
+}
+function startAudio1() {
+  const audio = document.getElementById("audio1");
+
+  if (!audio) return;
+
+  audio.loop = true;
+  audio.play();
+}
+function enterWithMusic() {
+  const audio = document.getElementById("audio1");
+
+  if (!audio) return;
+
+  audio.loop = true;
+  audio.currentTime = 0;
+
+  audio.play();
+
+  document.getElementById("audioPopup").style.display = "none";
+}
+function stopAudio1() {
+  const audios = document.querySelectorAll("audio");
+
+  audios.forEach(audio => {
+    audio.pause();
+    audio.currentTime = 0;
+  });
 }
 /* ======= Ambient drifting emojis ======= */
 const driftEmojis = ['🎈','🎉','✨','🎊','💛'];
@@ -986,7 +1175,7 @@ function prankClick(){
     btn.style.left = 'calc(50% - 100px)';
     btn.style.top = '90px';
     btn.style.width = '200px';
-    btn.textContent = "Acha theek hai, final next pakka";
+    btn.textContent = "Acha theek hai, final pakka";
     msg.textContent = "";
   } else if(prankStage === MAX_MOVES+1){
     prankStage++;
@@ -994,7 +1183,7 @@ function prankClick(){
     btn.style.left = 'calc(50% - 110px)';
     btn.style.top = '200px';
     btn.style.width = '220px';
-    btn.textContent = "Is baar pakka wish karunga 🤞";
+    btn.textContent = "Is baar pakka sachiiii🤞";
   } else {
     playCelebration();
     goTo(5);
