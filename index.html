@@ -412,6 +412,294 @@
     transform: scale(1);
   }
 }
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.popup-box {
+  width: min(90%, 420px);
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 22px;
+  padding: 30px 24px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.popup-message {
+  font-size: 20px;
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+
+.popup-close {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+}
+/* =========================
+   COUNTDOWN PAGE
+   ========================= */
+
+#countdownScreen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 99999;
+
+  background:
+    radial-gradient(circle at 15% 20%, rgba(255, 120, 210, 0.25), transparent 25%),
+    radial-gradient(circle at 85% 80%, rgba(120, 80, 255, 0.28), transparent 30%),
+    linear-gradient(135deg, #160b2b, #35105c, #65145f);
+}
+
+/* Main card */
+
+.countdown-card {
+  position: relative;
+  width: min(90%, 850px);
+  padding: 55px 45px;
+  text-align: center;
+
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 30px;
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  box-shadow:
+    0 25px 80px rgba(0, 0, 0, 0.45),
+    inset 0 0 40px rgba(255, 255, 255, 0.04);
+
+  overflow: hidden;
+}
+
+/* Heading */
+
+.countdown-card h1 {
+  margin: 0;
+  color: white;
+  font-size: clamp(28px, 5vw, 52px);
+  line-height: 1.15;
+  font-weight: 800;
+}
+
+.countdown-card h1 span {
+  color: #ff78c8;
+  text-shadow: 0 0 20px rgba(255, 120, 200, 0.6);
+}
+
+/* Message */
+
+.countdown-msg {
+  margin: 25px 0 35px;
+  color: #f7dff2;
+  font-size: clamp(15px, 2vw, 19px);
+  line-height: 1.7;
+}
+
+/* Countdown boxes */
+
+.countdown-box {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin: 25px 0 35px;
+}
+
+.countdown-item {
+  padding: 20px 10px;
+
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.2),
+    inset 0 0 20px rgba(255, 255, 255, 0.03);
+
+  transition: transform 0.3s ease;
+}
+
+.countdown-item:hover {
+  transform: translateY(-5px);
+}
+
+.countdown-item span {
+  display: block;
+  color: #ff72c7;
+  font-size: clamp(34px, 5vw, 60px);
+  font-weight: 800;
+  text-shadow: 0 0 20px rgba(255, 100, 200, 0.5);
+}
+
+.countdown-item small {
+  display: block;
+  margin-top: 8px;
+  color: #ffffff;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+/* Love note */
+
+.love-note {
+  padding: 25px;
+  border-radius: 22px;
+
+  background: rgba(255, 120, 200, 0.09);
+  border: 1px solid rgba(255, 150, 220, 0.15);
+
+  color: #fff;
+}
+
+.love-note p {
+  margin: 8px 0;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.love-note p:first-child {
+  font-size: 19px;
+}
+
+/* Footer */
+
+.countdown-footer {
+  margin-top: 28px;
+  color: #ff9bd8;
+  font-size: 15px;
+  letter-spacing: 1px;
+}
+
+/* Sparkles */
+
+.sparkle {
+  position: absolute;
+  color: #fff;
+  font-size: 30px;
+  text-shadow:
+    0 0 8px #fff,
+    0 0 18px #ff8bd8,
+    0 0 30px #ff8bd8;
+
+  animation: sparkleGlow 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.sparkle-1 {
+  top: 8%;
+  left: 8%;
+  animation-delay: 0s;
+}
+
+.sparkle-2 {
+  top: 15%;
+  right: 10%;
+  animation-delay: 0.6s;
+}
+
+.sparkle-3 {
+  bottom: 18%;
+  left: 12%;
+  animation-delay: 1.1s;
+}
+
+.sparkle-4 {
+  bottom: 10%;
+  right: 9%;
+  animation-delay: 1.6s;
+}
+
+@keyframes sparkleGlow {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(0.7) rotate(0deg);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.3) rotate(20deg);
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  .countdown-card {
+    width: 88%;
+    padding: 35px 18px;
+  }
+
+  .countdown-box {
+    gap: 8px;
+  }
+
+  .countdown-item {
+    padding: 15px 5px;
+    border-radius: 15px;
+  }
+
+  .countdown-item span {
+    font-size: 30px;
+  }
+
+  .countdown-item small {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+
+  .love-note {
+    padding: 18px 12px;
+  }
+
+  .love-note p {
+    font-size: 14px;
+  }
+
+  .sparkle {
+    font-size: 22px;
+  }
+}
+/* ===== COUNTDOWN FULL SCREEN FIX ===== */
+
+#countdownScreen {
+  position: fixed !important;
+  inset: 0 !important;
+
+  width: 100vw !important;
+  max-width: none !important;
+  height: 100vh !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  z-index: 999999 !important;
+}
+
+/* Countdown ke time baaki pages bilkul hide */
+body.countdown-active .screen:not(#countdownScreen) {
+  display: none !important;
+}
+
+/* Countdown khatam hone ke baad normal pages */
+body:not(.countdown-active) #countdownScreen {
+  display: none !important;
+}
 </style>
 </head>
 <body>
@@ -419,6 +707,65 @@
 <div id="ambient-layer"></div>
 <canvas id="confettiCanvas"></canvas>
 <div class="stage">
+  
+  <!-- COUNTDOWN PAGE -->
+<section class="screen" id="countdownScreen">
+  <div class="countdown-card">
+
+    <div class="sparkle sparkle-1">✦</div>
+    <div class="sparkle sparkle-2">✧</div>
+    <div class="sparkle sparkle-3">✦</div>
+    <div class="sparkle sparkle-4">✧</div>
+
+    <h1>
+      Counting down to <span>Manvi's</span><br>
+      special day 🎂
+    </h1>
+
+    <p class="countdown-msg">
+      ✨ A special celebration is on the way ✨<br>
+      and every second brings us closer to your smile 💖
+    </p>
+
+    <div class="countdown-box">
+
+      <div class="countdown-item">
+        <span id="cd-days">00</span>
+        <small>DAYS</small>
+      </div>
+
+      <div class="countdown-item">
+        <span id="cd-hours">00</span>
+        <small>HOURS</small>
+      </div>
+
+      <div class="countdown-item">
+        <span id="cd-mins">00</span>
+        <small>MINUTES</small>
+      </div>
+
+      <div class="countdown-item">
+        <span id="cd-secs">00</span>
+        <small>SECONDS</small>
+      </div>
+
+    </div>
+
+    <div class="love-note">
+      <p>You mean more to world than words can ever explain 🫡🫡</p>
+
+      <p>
+        Something really special is waiting for you,<br>
+        and I can't wait to celebrate you! ✨
+      </p>
+    </div>
+
+    <div class="countdown-footer">
+      ♡ Made with all my Dimag 🏴‍☠️, just for you ♡
+    </div>
+
+  </div>
+</section>
 
   <!-- 0: COVER -->
    <div id="audioPopup" class="audio-popup">
@@ -439,8 +786,9 @@
       <audio id="audio1" src="./audio1.mp3" loop preload="auto"></audio>
       <div class="bunting"><div class="flag"></div><div class="flag"></div><div class="flag"></div><div class="flag"></div><div class="flag"></div></div>
       <h1>Ek <span class="glow">Surprise</span> Hai Tumhare Liye 🎉</h1>
-      <p>Aankhein khuli rakhna... aage bahut kuch hai. Tumhara din itna special hai ki maine ispe pura ek "level-based game" bana diya — jitna khelogi, utna hi surprise milega (umeed toh hai 😅)</p>
-      <p class="joke" style="margin-top:-6px;">Warning: is website mein 100% prank, 60% pagalpan aur thoda sa mehnat hai 😅</p>
+      <p>Aankhein khuli rakhna... aage bahut kuch hai. Tumhara din itna special hai ki maine ispe pura ek "level-based game" bana diya, jitna khelogi, utna hi surprise milega (umeed toh hai 😅)</p>
+      <p>The intimacy of "I bought u this thing because you mentioned it once " 😩🫣</p>
+      <p class="joke" style="margin-top:-6px;">NOTICE: Is website mein 100% prank, 60% cringe cheeze aur thoda sa mehnat hai 😅</p>
       <button onclick="goTo(1); burstConfetti(40);  playIndepSong();">Chalo, ache se wish karte hai 💛</button>
     </div>
   </section>
@@ -485,6 +833,25 @@
       <button id="celebNext" onclick="stopCorrectAnswerAudio(); goTo(4)" disabled style="opacity:0.35;">Aage badho →</button>
     </div>
   </section>
+  <div id="correctAnswerPopup"
+     class="popup-overlay"
+     style="display:none;">
+
+  <div class="popup-box">
+
+    <p class="popup-message">
+      Acha toh tum heroin ho 😭,<br>
+      chalo theek hai maan lete hai 😩🫣
+    </p>
+
+    <button class="popup-close"
+            onclick="closeCorrectPopup()">
+      Haha, Theek Hai 😭
+    </button>
+
+  </div>
+
+</div>
 
   <!-- 4: PRANK BUTTON -->
   <section class="screen" id="s4">
@@ -590,7 +957,7 @@
     <div class="card" style="position:relative; overflow:hidden;">
       <audio id="s9s10Audio" src="./s9-s10-song.mp3" preload="auto"></audio>
       <h1><span class="glow">Happy Birthday, Manvi!</span> 🎂🎉</h1>
-      <p>Tumhara aaj ka din bilkul tumhari tarah hi khaas ho — bharpoor pyaar, hansi aur khushiyon se bhara. Yeh saal tumhe wo sab mile jiske tum haqdaar ho 💛</p>
+      <p>Tumhara aaj ka din bilkul tumhari tarah hi khaas ho... bharpoor pyaar, hansi aur khushiyon se bhara. Yeh saal tumhe wo sab mile jiske tum haqdaar ho 💛</p>
       <p>Happy birthday once again, Manvi💛♾️...
         Thank u to come in this world and in my lyf 💀(cringe hogya)
         And make our lyf full of happiness....♾️♾️✨
@@ -610,8 +977,6 @@
 <div class="memory-image">
     <img src="./screenshot.png" alt="A special memory">
 </div>
-
-<div style="font-size:38px;">🥳🎈🎁</div>
         <p>ye whi msg hai jo tumne ekdam strting mai kaha tha birthday hai mera aur wish v nhi kiya toh hm 
           likh kr bheje pr tum sooogyii🥲🥲 , phir boli jyoti ka birthday hai,  tumne kaha tha copy paste kr dena toh 
           lo kr diya 🫣🫣
@@ -628,22 +993,39 @@
       <h2>Ek Aakhri Baat...</h2>
       <p>
         Manvi, tum jitni achiiiii ho utni hi khaas bhi hoooo. Yeh poora surprise sirf ek chhota sa koshish tha
-        tumhe hasaane ki aur yeh dikhaane ki ki tumhara din kitna important hai kyuki independance day hai...😅😂
+        tumhe hasaane ki aur yeh dikhaane ki tumhara din kitna important hai kyuki independance day hai...😅😂
         <br>
         <br>
-        Acha haa reels dekhte dekhte ek line mila jo same mera pov tumhare liye wo ye hai ki :
+        Acha haa hmko na reels dekhte dekhte ek line mila jo same mera pov tumhare liye wo ye hai ki(hasegi hi pakka padh kr 😭,pr genuine baat Hai
+        hassna nhi, theek ??? 🥸):
         <br>
         <br>"
         find me when ur friends let u down 🤝, find me when the world feels too heavy to carry alone 🙃, And when 
-        ur heart feels like it's breaking💔 when you are exhausted from being strong when the silence gets loud 
-        and no one hears u "FIND ME" , I DONT know if i can fix everything but i promise u won't face it alone ,I will 
+        ur heart feels like it's breaking💔 when you are exhausted from being strong, when the silence gets loud 
+        and no one hears u  "FIND ME" , I DONT know if i can fix everything but i promise u won't face it alone ,I will 
         sit with u in the dark and remind u of ur light and stay until u smile slowly finds it's way back ..
         you are never a burden to me , never !!!☺️"
-        hmko pta hai itna english padh kr gariyaa toh di hi hogi abhi tk 🫣, khair !!!😋😋
+        <br>
+        Hmko pta hai itna english padh kr gariyaa toh di hi hogi abhi tk 🫣, khair !!!
+        <br>
         Hamesha aise hi muskurate raho, aur jo bhi chaho wo sab paao. Happy Birthday, dher saari duayein tumhare saath hain 🎂✨
+        <h4>Even queens have bad days, but your crown is still yours. 🧿👑 </h4>
       </p>
+      <important> Kabhi v khud ko ye mt bola kr ki nhi kr skti cheeze , pls.... kyuki
+        <br>
+       Seeing you win is a part of your parents' dream 😭❤️… and who knows, maybe someone else's dream as well. 😭🤌
+       </important>
+       <p> Last message </p>
       <h3>YOU HAPPY , ALL HAPPY 🤩🤌</h3>
+      <br>
+      <h3>YOU SAD , ALL SAD 💔</h3>
+      <br>
+      <p> Mereko ek baat ka bura lga tune aapna nails chota kr liya 😭,kya hi dikhta tha mast ekdm🤌😭 ,maar deti toh insaan 
+        hi khtmm 😭😭 </p>
+      <h4>Once again , happy birthday! supercalifragilisticexpialidocious girl🧿👑... IYKYK🫣</h4>
       <p class="utility" style="font-size:13px; opacity:0.75;">— from anuj </p>
+      <h5> End Game 💔🙂</h5>
+
       <button class="ghost" onclick="closeMiniPlayer(); goTo(0); resetAll();">Fir se dekho ↺</button>
     </div>
   </section>
@@ -674,8 +1056,14 @@ function goTo(n) {
     }
   }
 
-  document.getElementById('s' + currentScreen).classList.remove('active');
-  currentScreen = n;
+  // Pehle saare screens hide karo
+document.querySelectorAll('.screen').forEach(screen => {
+  screen.classList.remove('active');
+});
+
+// Ab requested screen show karo
+currentScreen = n;
+document.getElementById('s' + currentScreen).classList.add('active');
   if (n === 9) {
   const song = document.getElementById("s9s10Audio");
 
@@ -727,7 +1115,6 @@ if (n !== 5) {
     song.currentTime = 0;
   }
 }
-  document.getElementById('s' + currentScreen).classList.add('active');
   if (n === 3) {
   const song = document.getElementById("s3Audio");
 
@@ -852,6 +1239,13 @@ function stopCuteVideo() {
     if (container) {
         container.innerHTML = "";
     }
+}
+function showCorrectPopup() {
+  document.getElementById("correctAnswerPopup").style.display = "flex";
+}
+
+function closeCorrectPopup() {
+  document.getElementById("correctAnswerPopup").style.display = "none";
 }
 function closeMiniPlayer(){
   clearVideo('s1VideoWrap');
@@ -1134,6 +1528,7 @@ function checkCeleb(){
     nextBtn.style.opacity = '1';
     burstConfetti(80);
     playCelebration();
+    showCorrectPopup();
   } else {
     celebTries++;
     document.getElementById('celebInput').classList.remove('shake');
@@ -1255,8 +1650,8 @@ function playRealSong(){
 }
 
 /* ======= Screen 7: Sweets quiz (dual correct answer) ======= */
-const sweetChoices = ['Rasmalai','Gulab Jamun','Nariyal Laddu','Kaju Katli','Jalebi'];
-const correctSweets = new Set(['Rasmalai','Nariyal Laddu']);
+const sweetChoices = ['Rasmalai','Gulab Jamun','Nariyal Laddu','Kaju Katli','Jalebi','Barfi','Lassi','Peda','Rasgulla','Kheer'];
+const correctSweets = new Set(['Rasmalai','Nariyal Laddu','Kaju Katli']);
 let foundSweets = new Set();
 function renderSweetOptions(){
   const wrap = document.getElementById('sweetOptions');
@@ -1533,6 +1928,77 @@ function resetAll(){
 
   clearDraw();
 }
+// =========================
+// COUNTDOWN TIMER
+// =========================
+const countdownPage = document.getElementById("countdownScreen");
+const firstPage = document.getElementById("s0");
+document.body.classList.add("countdown-active");
+countdownPage.style.setProperty("display", "flex", "important");
+countdownPage.style.setProperty("width", "100vw", "important");
+countdownPage.style.setProperty("height", "100vh", "important");
+
+// firstPage.style.setProperty("display", "none", "important");
+const birthdayDate = new Date("2026-08-15T00:00:00");
+// const birthdayDate = new Date();
+
+function updateCountdown() {
+
+  const now = new Date();
+  const difference = birthdayDate - now;
+
+  // Birthday aa gaya 🎂
+  if (difference <= 0) {
+  document.body.classList.remove("countdown-active");
+
+  const countdownPage = document.getElementById("countdownScreen");
+  countdownPage.style.display = "none";
+
+  // Sirf tab S0 show karo jab abhi tak koi page open nahi hua
+  if (currentScreen === 0) {
+    const firstPage = document.getElementById("s0");
+    firstPage.style.removeProperty("display");
+    firstPage.classList.add("active");
+  }
+
+  return;
+}
+
+  const days = Math.floor(
+    difference / (1000 * 60 * 60 * 24)
+  );
+
+  const hours = Math.floor(
+    (difference / (1000 * 60 * 60)) % 24
+  );
+
+  const minutes = Math.floor(
+    (difference / (1000 * 60)) % 60
+  );
+
+  const seconds = Math.floor(
+    (difference / 1000) % 60
+  );
+
+  document.getElementById("cd-days").textContent =
+    String(days).padStart(2, "0");
+
+  document.getElementById("cd-hours").textContent =
+    String(hours).padStart(2, "0");
+
+  document.getElementById("cd-mins").textContent =
+    String(minutes).padStart(2, "0");
+
+  document.getElementById("cd-secs").textContent =
+    String(seconds).padStart(2, "0");
+}
+
+
+// Countdown immediately start karo
+updateCountdown();
+
+// Har 1 second update karo
+setInterval(updateCountdown, 1000);
 </script>
 </body>
 </html>
