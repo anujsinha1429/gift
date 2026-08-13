@@ -789,7 +789,7 @@ body:not(.countdown-active) #countdownScreen {
       <p>Aankhein khuli rakhna... aage bahut kuch hai. Tumhara din itna special hai ki maine ispe pura ek "level-based game" bana diya, jitna khelogi, utna hi surprise milega (umeed toh hai 😅)</p>
       <p>The intimacy of "I bought u this thing because you mentioned it once " 😩🫣</p>
       <p class="joke" style="margin-top:-6px;">NOTICE: Is website mein 100% prank, 60% cringe cheeze aur thoda sa mehnat hai 😅</p>
-      <button onclick="goTo(1); burstConfetti(40);  playIndepSong();">Chalo, ache se wish karte hai 💛</button>
+      <button onclick="goTo(1); burstConfetti(40); playIndepSong(); preloadCuteVideo();">Chalo, ache se wish karte hai 💛</button>
     </div>
   </section>
 
@@ -813,7 +813,17 @@ body:not(.countdown-active) #countdownScreen {
       <h1>Happy Birthday <span class="glow">Manvi</span>! 🥳</h1>
       <p>Tumhara din khushiyon, hansi aur ढेर saari good vibes se bhara rahe. Tum jaisi ho waise hi hamesha chamakti raho ✨</p>
       <div style="font-size:34px; margin:10px 0;">🎈🎂🎉🎁🎊</div>
-      <div class="video-embed" id="s2VideoWrap"></div>
+      <div class="video-embed" id="s2VideoWrap">
+  <video
+      id="cuteVideo"
+      width="100%"
+      playsinline
+      controls
+      preload="auto"
+      style="display:none;">
+      <source src="cute-video.mp4" type="video/mp4">
+  </video>
+</div>
       <button onclick="burstConfetti(40); stopCuteVideo(); goTo(3);">Aage chalo</button>
     </div>
   </section>
@@ -899,11 +909,11 @@ body:not(.countdown-active) #countdownScreen {
 
 <div id="realSongBlock" style="display:none; margin-top:18px;">
     <button class="ghost" onclick="playFavoriteSong()">
-        🎂 Manvi's Fav song 🎵
+        🎂 Aapka Fav song 🎵
     </button>
 </div>
 <div id="favoriteSongTitle" style="display:none; text-align:center; margin:15px 0 8px;">
-    <h3 style="margin:0;">🎂 Manvi's Fav Song 🎵</h3>
+    <h3 style="margin:0;">🎂 Ye rha Aapka Fav Song 🫣🎵</h3>
 </div>
 
 <video
@@ -917,7 +927,7 @@ body:not(.countdown-active) #countdownScreen {
 
 <br>
 
-<button class="ghost" onclick="stopFavoriteSong(); goTo(7);">
+<button class="ghost" id="s6NextBtn" onclick="stopFavoriteSong(); goTo(7);" style="display:none;">
     Aage badho →
 </button>
     </div>
@@ -972,7 +982,7 @@ body:not(.countdown-active) #countdownScreen {
 
         <br>
         <br>
-        <h3>💖 A little memory</h3>
+        <h3>💖 A little memory (scroll down) </h3>
 
 <div class="memory-image">
     <img src="./screenshot.png" alt="A special memory">
@@ -1193,33 +1203,26 @@ function embedVideo(containerId, videoId, opts) {
         </iframe>
     `;
 }
+let cuteVideo = null;
 
-let cuteVideo;
+function preloadCuteVideo(){
+  if(!cuteVideo){
+    cuteVideo = document.getElementById('cuteVideo');
+  }
+  if(cuteVideo){
+    cuteVideo.load();
+  }
+}
 
 function startCuteVideo() {
-    const container = document.getElementById("s2VideoWrap");
+    if(!cuteVideo){
+        cuteVideo = document.getElementById('cuteVideo');
+    }
+    if (!cuteVideo) return;
 
-    if (!container) return;
+    cuteVideo.style.display = 'block';
 
-    container.innerHTML = `
-        <video
-            id="cuteVideo"
-            width="100%"
-            playsinline
-            controls
-            preload="auto">
-            <source src="cute-video.mp4" type="video/mp4">
-        </video>
-    `;
-
-    cuteVideo = document.getElementById("cuteVideo");
-
-    // Pehli baar 3 sec se start
-    cuteVideo.currentTime = 3;
-
-    // Video khatam hote hi dobara 3 sec se start
     cuteVideo.addEventListener("ended", function () {
-        cuteVideo.currentTime = 3;
         cuteVideo.play();
     });
 
@@ -1229,15 +1232,8 @@ function startCuteVideo() {
 function stopCuteVideo() {
     if (cuteVideo) {
         cuteVideo.pause();
-        cuteVideo.currentTime = 3;
-        cuteVideo.remove();
-        cuteVideo = null;
-    }
-
-    const container = document.getElementById("s2VideoWrap");
-
-    if (container) {
-        container.innerHTML = "";
+        cuteVideo.currentTime = 0;
+        cuteVideo.style.display = 'none';
     }
 }
 function showCorrectPopup() {
@@ -1248,9 +1244,13 @@ function closeCorrectPopup() {
   document.getElementById("correctAnswerPopup").style.display = "none";
 }
 function closeMiniPlayer(){
-  clearVideo('s1VideoWrap');
-  clearVideo('s2VideoWrap');
-  clearVideo('s6VideoWrap');
+  const s1Wrap = document.getElementById('s1VideoWrap');
+  const s2Wrap = document.getElementById('s2VideoWrap');
+  const s6Wrap = document.getElementById('s6VideoWrap');
+
+  if (s1Wrap) s1Wrap.innerHTML = '';
+  if (s2Wrap) s2Wrap.innerHTML = '';
+  if (s6Wrap) s6Wrap.innerHTML = '';
 }
 function playIndepSong() {
   const song = document.getElementById("indepSong");
@@ -1328,6 +1328,7 @@ function playWrongAudio() {
 function playFavoriteSong() {
     const video = document.getElementById("favoriteSong");
     const title = document.getElementById("favoriteSongTitle");
+    const nextBtn = document.getElementById("s6NextBtn");
 
     if (!video) return;
 
@@ -1339,8 +1340,20 @@ function playFavoriteSong() {
     // Video dikhao
     video.style.display = "block";
 
+    // Button chhupao jab tak video khatam na ho
+    if (nextBtn) {
+        nextBtn.style.display = "none";
+    }
+
     video.currentTime = 0;
     video.play();
+
+    // Video khatam hote hi button dikhao
+    video.addEventListener("ended", function () {
+        if (nextBtn) {
+            nextBtn.style.display = "inline-block";
+        }
+    }, { once: true });
 }
 
 function stopFavoriteSong() {
@@ -1650,7 +1663,7 @@ function playRealSong(){
 }
 
 /* ======= Screen 7: Sweets quiz (dual correct answer) ======= */
-const sweetChoices = ['Rasmalai','Gulab Jamun','Nariyal Laddu','Kaju Katli','Jalebi','Barfi','Lassi','Peda','Rasgulla','Kheer'];
+const sweetChoices = ['Rasmalai','Gulab Jamun','Jalebi','Barfi','Lassi','Nariyal Laddu','Peda','Kaju Katli','Rasgulla','Kheer'];
 const correctSweets = new Set(['Rasmalai','Nariyal Laddu','Kaju Katli']);
 let foundSweets = new Set();
 function renderSweetOptions(){
@@ -1674,7 +1687,7 @@ function checkSweet(name, btn){
     playCelebration();
     burstConfetti(40);
     if(foundSweets.size < correctSweets.size){
-      hint.textContent = "One more please Manvi 😭";
+      hint.textContent = "one more please Manvi 😭";
     } else {
       hint.textContent = "Yesss dono sahi! 🎉";
       const nextBtn = document.getElementById('sweetNext');
@@ -1927,6 +1940,15 @@ function resetAll(){
   renderSweetOptions();
 
   clearDraw();
+  const audio1 = document.getElementById('audio1');
+  if (audio1) {
+    audio1.pause();
+    audio1.currentTime = 0;
+  }
+  const audioPopup = document.getElementById('audioPopup');
+  if (audioPopup) {
+    audioPopup.style.display = 'flex';
+  }
 }
 // =========================
 // COUNTDOWN TIMER
