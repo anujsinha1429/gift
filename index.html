@@ -700,6 +700,69 @@ body.countdown-active .screen:not(#countdownScreen) {
 body:not(.countdown-active) #countdownScreen {
   display: none !important;
 }
+.tease-line{
+  display:none;
+  animation: fadeUp 0.6s ease both;
+}
+.chat-wrap{
+  max-height:420px;
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  padding:10px;
+  text-align:left;
+}
+.chat-bubble{
+  max-width:75%;
+  padding:10px 14px;
+  border-radius:16px;
+  font-family:'Poppins', sans-serif;
+  font-size:14px;
+  line-height:1.5;
+  animation: fadeUp 0.4s ease both;
+}
+.chat-bubble.anuj{
+  align-self:flex-end;
+  background:linear-gradient(90deg, var(--gold), #ffb84d);
+  color:var(--ink);
+  border-bottom-right-radius:4px;
+}
+.chat-bubble.bot{
+  align-self:flex-start;
+  background:rgba(255,255,255,0.1);
+  color:var(--cream);
+  border-bottom-left-radius:4px;
+}
+.chat-bubble.thought{
+  align-self:flex-end;
+  background:transparent;
+  border:2px dashed rgba(255,209,102,0.5);
+  color:var(--gold);
+  font-style:italic;
+  font-size:13px;
+}
+.typing-dots{
+  align-self:flex-start;
+  display:flex;
+  gap:4px;
+  padding:10px 14px;
+  background:rgba(255,255,255,0.1);
+  border-radius:16px;
+  border-bottom-left-radius:4px;
+}
+.typing-dots span{
+  width:6px; height:6px; border-radius:50%;
+  background:var(--cream);
+  opacity:0.6;
+  animation: typingBounce 1s infinite;
+}
+.typing-dots span:nth-child(2){ animation-delay:0.15s; }
+.typing-dots span:nth-child(3){ animation-delay:0.3s; }
+@keyframes typingBounce{
+  0%,60%,100%{ transform:translateY(0); opacity:0.4; }
+  30%{ transform:translateY(-4px); opacity:1; }
+}
 </style>
 </head>
 <body>
@@ -786,7 +849,8 @@ body:not(.countdown-active) #countdownScreen {
       <audio id="audio1" src="./audio1.mp3" loop preload="auto"></audio>
       <div class="bunting"><div class="flag"></div><div class="flag"></div><div class="flag"></div><div class="flag"></div><div class="flag"></div></div>
       <h1>Ek <span class="glow">Surprise</span> Hai Tumhare Liye 🎉</h1>
-      <p>Aankhein khuli rakhna... aage bahut kuch hai. Tumhara din itna special hai ki maine ispe pura ek "level-based game" bana diya, jitna khelogi, utna hi surprise milega (umeed toh hai 😅)</p>
+      <p>Aankhein khuli rakhna... aage bahut kuch hai. Tumhara din itna special hai ki maine ispe pura dimag lga diya(dimag toh hai nhi phir kaise pakka tu yhi boli hogi confirm), 
+        aage games hai jitna khelogi, utna hi surprise milega (umeed toh hai 😅)</p>
       <p>The intimacy of "I bought u this thing because you mentioned it once " 😩🫣</p>
       <p class="joke" style="margin-top:-6px;">NOTICE: Is website mein 100% prank, 60% cringe cheeze aur thoda sa mehnat hai 😅</p>
       <button onclick="goTo(1); burstConfetti(40); playIndepSong(); preloadCuteVideo();">Chalo, ache se wish karte hai 💛</button>
@@ -840,7 +904,7 @@ body:not(.countdown-active) #countdownScreen {
       <div class="hint utility" id="celebHint"></div>
       <br>
       <audio id="correctAnswerAudio" src="correct-answer.mp3" preload="auto"></audio>
-      <button id="celebNext" onclick="stopCorrectAnswerAudio(); goTo(4)" disabled style="opacity:0.35;">Aage badho →</button>
+      <button id="celebNext" onclick="stopCorrectAnswerAudio(); goTo('3b')" disabled style="opacity:0.35;">Aage badho →</button>
     </div>
   </section>
   <div id="correctAnswerPopup"
@@ -862,10 +926,64 @@ body:not(.countdown-active) #countdownScreen {
   </div>
 
 </div>
+<!-- 3b: TEASE LINES -->
+<section class="screen" id="s3b">
+  <div class="card">
+    <audio id="teaseAudio1" src="./tease-song-1.mp3" preload="auto"></audio>
+    <audio id="teaseAudio2" src="./tease-song-2.mp3" preload="auto"></audio>
+    <h2 class="glow">Ek Mazedaar Baat...</h2>
+    <p>Acha toh tumhe "Aishwarya Rai" bola jata tha? 🤨</p>
+    <p id="teaseLine2" class="tease-line">Below average tariff huhhh 😹</p>
+    <p id="teaseLine3" class="tease-line">Aishwarya Rai teri 1% bhi nahi hai 😭🤚</p>
+    <p id="teaseLine3A" class="tease-line">Tum toh queen victoria choro malika dilfareb seh v jada sundar ho 😭🥸</p>
+    <p id="teaseLine4" class="tease-line">Waise seriously... duniya ki sabse khoobsurat ladki dekhna chahogi? 👀</p>
+    <button id="teaseNextBtn" class="secondary" onclick="advanceTease()">Aur batao</button>
+  </div>
+</section>
 
+<div id="teasePopup" class="popup-overlay" style="display:none;">
+  <div class="popup-box">
+    <p class="popup-message">Dekhna chahogi duniya ki sabse khoobsurat ladki? 😍</p>
+    <button class="popup-close" onclick="openPhotoReveal()">Haan dikhao na</button>
+  </div>
+</div>
+
+<!-- 3c: PRANK BUTTON BEFORE REVEAL -->
+<section class="screen" id="s3c">
+  <div class="card">
+    <h2>Ek Idea Hai Mere Paas 💡</h2>
+    <p>Without ur permission tumhara photo nahi daal sakta na... prrrrr, bana toh sakta hu na 😏</p>
+    <div class="prank-area" style="height:180px;">
+      <button id="photoRevealBtn" class="secondary" style="position:absolute; top:60px; left:calc(50% - 100px);" onclick="photoRevealClick()">Dekhna chahti?</button>
+    </div>
+  </div>
+</section>
+
+<!-- 3d: FINAL PHOTO REVEAL -->
+<section class="screen" id="s3d">
+  <div class="card">
+    <h2>Theek hai theek hai, lo dekh lo 😩💛</h2>
+    <div class="memory-image">
+      <img src="./tease-photo.jpg" alt="Duniya ki sabse khoobsurat ladki">
+    </div>
+    <button onclick="goTo('3e');">Aage badho →</button>
+  </div>
+</section>
+<!-- 3e: ROAST CHAT -->
+<section class="screen" id="s3e">
+  <div class="card">
+     <audio id="chatAudio" src="./chat-song.mp3" preload="auto"></audio>
+    <h2>Ek Chhota Sa Chat ☕</h2>
+    <p class="utility" style="font-size:14px;">kabhi kabhi tareef maangna padta hai pr phir v nhi milta...🫣</p>
+    <div class="chat-wrap" id="chatWrap"></div>
+    <button id="chatStartBtn" onclick="startRoastChat()">Chat shuru karo</button>
+    <button id="chatNextBtn" onclick="goTo(4)" style="display:none;">Aage badho →</button>
+  </div>
+</section>
   <!-- 4: PRANK BUTTON -->
   <section class="screen" id="s4">
     <div class="card">
+      <audio id="s4Audio" src="./s4-song.mp3" preload="auto"></audio>
       <h2>Just one more click, and the next surprise awaits you. ✨</h2>
       <p class="utility" id="prankMsg">Neeche wale button ko dabao...</p>
       <div class="prank-area">
@@ -1030,11 +1148,11 @@ body:not(.countdown-active) #countdownScreen {
       <br>
       <h3>YOU SAD , ALL SAD 💔</h3>
       <br>
-      <p> Mereko ek baat ka bura lga tune aapna nails chota kr liya 😭,kya hi dikhta tha mast ekdm🤌😭 ,maar deti toh insaan 
-        hi khtmm 😭😭 </p>
+      <p> Mereko ek baat ka bura lga tune aapna nails chota kr liya 😭,kya hi dikhta tha mast ekdm🤌😭 ,unmai v jaan hoti hai tune kaata 😭,
+        maar deti toh insaan hi khtmm hojata self protection v tha ... khair 😭😭 </p>
       <h4>Once again , happy birthday! supercalifragilisticexpialidocious girl🧿👑... IYKYK🫣</h4>
       <p class="utility" style="font-size:13px; opacity:0.75;">— from anuj </p>
-      <h5> End Game 💔🙂</h5>
+      <h5> End Game 🙂</h5>
 
       <button class="ghost" onclick="closeMiniPlayer(); goTo(0); resetAll();">Fir se dekho ↺</button>
     </div>
@@ -1158,6 +1276,184 @@ if (n !== 3) {
     startAmbientConfetti();
   } else {
     stopAmbientConfetti();
+  }
+  if (n === '3b' || n === '3c') {
+    const t1 = document.getElementById("teaseAudio1");
+    const t2 = document.getElementById("teaseAudio2");
+    if (t2) { t2.pause(); t2.currentTime = 0; }
+    if (t1) {
+      t1.loop = true;
+      t1.currentTime = 0;
+      t1.play();
+    }
+  }
+
+  if (n === '3d') {
+    const t1 = document.getElementById("teaseAudio1");
+    const t2 = document.getElementById("teaseAudio2");
+    if (t1) { t1.pause(); t1.currentTime = 0; }
+    if (t2) {
+      t2.loop = true;
+      t2.currentTime = 0;
+      t2.play();
+    }
+  }
+
+  if (n === '3e') {
+    const t2 = document.getElementById("teaseAudio2");
+    const chatSong = document.getElementById("chatAudio");
+    if (t2) { t2.pause(); t2.currentTime = 0; }
+    if (chatSong) {
+      chatSong.loop = true;
+      chatSong.currentTime = 0;
+      chatSong.play();
+    }
+  }
+  if (n === 4) {
+    const chatSong = document.getElementById("chatAudio");
+    const s4Song = document.getElementById("s4Audio");
+    if (chatSong) { chatSong.pause(); chatSong.currentTime = 0; }
+    if (s4Song) {
+      s4Song.loop = true;
+      s4Song.currentTime = 0;
+      s4Song.play();
+    }
+  }
+
+  if (n !== '3b' && n !== '3c' && n !== '3d' && n !== '3e' && n !== 4) {
+    const t1 = document.getElementById("teaseAudio1");
+    const t2 = document.getElementById("teaseAudio2");
+    const chatSong = document.getElementById("chatAudio");
+    const s4Song = document.getElementById("s4Audio");
+    if (t1) { t1.pause(); t1.currentTime = 0; }
+    if (t2) { t2.pause(); t2.currentTime = 0; }
+    if (chatSong) { chatSong.pause(); chatSong.currentTime = 0; }
+    if (s4Song) { s4Song.pause(); s4Song.currentTime = 0; }
+  }
+}
+const roastChat = [
+  // Scene 1: CGPA
+  { sender:'anuj', text:'janti ho Iss sem mein 8.4 CGPA aaya mera 😄' },
+  { sender:'thought', text:'Ab toh tareef milegi hi milegi 😌' },
+  { sender:'bot', text:'8.4 CGPA?? itna toh side subjects mein bhi easily aa jaata hai 🙄' },
+
+  // Scene 2: DSA
+  { sender:'anuj', text:'Achha waise DSA bhi ab kaafi acha aata hai mujhe 💪' },
+  { sender:'thought', text:'Chalo ye toh maan hi legi 😤' },
+  { sender:'bot', text:'DSA aata hai toh kya hua, ek subject se job lag jayegi kya? 😂' },
+
+  // Scene 3: Writing praise
+  { sender:'anuj', text:'Waise aajkal meri likhne ki style bhi kaafi improve ho gayi hai' },
+  { sender:'thought', text:'Iss baar toh tareef pakki hai 😌' },
+  { sender:'bot', text:'Cheeee... ye padh ke ulti aa rahi hai 🤢' },
+  { sender:'bot', text:'Meri writing dekh, wo hai asli talent ✨' },
+  { sender:'anuj', text:'Achha theek hai theek hai, teri writing best hai bas 🙏' },
+
+  // Scene 4: Anger + mard jaat
+  { sender:'anuj', text:'Tu bahut buri hai kabhi kabhi 😤' },
+  { sender:'bot', text:'...' },
+  { sender:'anuj', text:'Sorry sorry yaar, maine mazak mein bola tha' },
+  { sender:'bot', text:'Hmm.' },
+  { sender:'anuj', text:'Sorry na, please baat kar 🥺' },
+  { sender:'bot', text:'Tu bol diya na, jaa ab baat mat kar. Tu bhi sab mard jaat jaisa hai 🙄' },
+  { sender:'anuj', text:'Arey sorry yaar, please' },
+  { sender:'bot', text:'Sare mard jaat aise hi hote hai' },
+  { sender:'anuj', text:'Sorry sorry sorry 🥺🥺' },
+  { sender:'bot', text:'hehehe theek hai maaf kiya 😌' },
+
+  // Scene 5: Ganda insaan
+  { sender:'bot', text:'Tu bahut ganda hai' },
+  { sender:'anuj', text:'Kaise bol sakti aisi galat baat' },
+  { sender:'bot', text:'Ab tu mereko galat bol raha?' },
+  { sender:'anuj', text:'prr... mai ganda insan kaise hu...' },
+  { sender:'bot', text:'mai bol rhi islie...' },
+  { sender:'anuj', text:'theek hai.... haan main ganda insaan hu, ' },
+  { sender:'bot', text:'hehe😌' },
+  { sender:'anuj', text:'khush 😭?' },
+  { sender:'bot', text:'haa, sach sunane mai maza toh aata hai 🤭' },
+
+  // Scene 6: LinkedIn
+  { sender:'anuj', text:'Waise LinkedIn pe kaafi achi post daali thi maine' },
+  { sender:'bot', text:'hahaha wahi dekh ke sabko pata chal gaya hoga status kya hai tera 😹' },
+
+  // Scene 7: CGPA higher this time
+  { sender:'anuj', text:'Iss baar CGPA aur bhi jyada aaya hai mera 😎' },
+  { sender:'bot', text:'phir v mere seh toh 🫣............... chor padhai kar, muh mat lag mere 🙄' },
+  { sender:'anuj', text:'Kaise bol rahi' },
+  { sender:'bot', text:'padhai kar, level badha, phir baat karne aana 😤' },
+  { sender:'anuj', text:'aree mai toh bss bata rha thha 🙂' },
+  { sender:'bot', text:'baiiiii in mardo seh baat krke sirf ek hi cheez milta ser dard..😒' },
+  { sender:'anuj', text:'areee pr maine toh abhi tk kuch bhi nahi bola..😭' },
+  { sender:'bot', text:'haa tb seh mai bakwash kr rhi hu na... pgl ☺️' },
+   { sender:'anuj', text:'bht daatane lgi ho aaj kl..🥲' },
+    { sender:'bot', text:'haa toh, kuch kehna hai kya 😤' },
+   { sender:'anuj', text:'nhi nhi , meri itni himat kaha tere samne bolu kuch ...😭' },
+
+
+  // Final self-praise
+  { sender:'bot', text:'Waise sach bolo? Teri zindagi sudhar gayi hai mere wajah se... shukar mana, tereko toh sukar manana chahiye bhagwan ne itni achi insaan bheja hai...  🦶😌' },
+  { sender:'anuj', text:'phir kuch bolunga toh maar degi... haa haaa shi keh rhi tu na hoti toh mai khtm hojata ... thank uuuuuuuuuuuuuuuuu🥺😭' },
+  { sender:'anuj', text:'waise mai tereseh derta warta nhi hu for ur kind information😭' },
+  { sender:'bot', text:'haa haa dikh rha khud ko dilasha dene ka acha tarika hai carry on..😣😂' }
+];
+
+let chatIndex = 0;
+
+function startRoastChat(){
+  document.getElementById('chatStartBtn').style.display = 'none';
+  chatIndex = 0;
+  document.getElementById('chatWrap').innerHTML = '';
+  playNextRoastMessage();
+}
+
+function appendChatBubble(className, text){
+  const wrap = document.getElementById('chatWrap');
+  const div = document.createElement('div');
+  div.className = 'chat-bubble ' + className;
+  div.textContent = text;
+  wrap.appendChild(div);
+  wrap.scrollTop = wrap.scrollHeight;
+  return div;
+}
+
+function appendTypingIndicator(){
+  const wrap = document.getElementById('chatWrap');
+  const div = document.createElement('div');
+  div.className = 'typing-dots';
+  div.id = 'typingIndicator';
+  div.innerHTML = '<span></span><span></span><span></span>';
+  wrap.appendChild(div);
+  wrap.scrollTop = wrap.scrollHeight;
+}
+
+function removeTypingIndicator(){
+  const el = document.getElementById('typingIndicator');
+  if(el) el.remove();
+}
+
+function playNextRoastMessage(){
+  if(chatIndex >= roastChat.length){
+    setTimeout(()=>{
+      document.getElementById('chatNextBtn').style.display = 'inline-block';
+    }, 500);
+    return;
+  }
+
+  const item = roastChat[chatIndex];
+
+  if(item.sender === 'bot'){
+    appendTypingIndicator();
+    setTimeout(()=>{
+      removeTypingIndicator();
+      appendChatBubble('bot', item.text);
+      chatIndex++;
+      setTimeout(playNextRoastMessage, 850);
+    }, 1300);
+  } else {
+    const cls = item.sender === 'thought' ? 'thought' : 'anuj';
+    appendChatBubble(cls, item.text);
+    chatIndex++;
+    setTimeout(playNextRoastMessage, item.sender === 'thought' ? 900 : 700);
   }
 }
 
@@ -1597,7 +1893,55 @@ function prankClick(){
     goTo(5);
   }
 }
+let teaseStep = 0;
+const teaseLines = ['teaseLine2','teaseLine3','teaseLine3A','teaseLine4'];
+function advanceTease(){
+  const btn = document.getElementById('teaseNextBtn');
 
+  if(teaseStep < teaseLines.length){
+    document.getElementById(teaseLines[teaseStep]).style.display = 'block';
+    teaseStep++;
+
+    if(teaseStep === teaseLines.length){
+      btn.textContent = 'Haan dekhna hai';
+    }
+  } else {
+    document.getElementById('teasePopup').style.display = 'flex';
+  }
+}
+function openPhotoReveal(){
+  document.getElementById('teasePopup').style.display = 'none';
+  goTo('3c');
+}
+
+let photoRevealStage = 0;
+function photoRevealClick(){
+  const btn = document.getElementById('photoRevealBtn');
+  const area = btn.parentElement;
+  const areaW = area.clientWidth, areaH = area.clientHeight;
+  const btnW = btn.offsetWidth || 140, btnH = btn.offsetHeight || 46;
+  const maxLeft = Math.max(areaW - btnW, 10);
+  const maxTop = Math.max(areaH - btnH, 10);
+
+  photoRevealStage++;
+  playTryAgainSound();
+
+  if(photoRevealStage === 1){
+    btn.textContent = 'Pakka dekhna chahti?';
+    btn.style.left = Math.random()*maxLeft + 'px';
+    btn.style.top = Math.random()*maxTop + 'px';
+  } else if(photoRevealStage === 2){
+    btn.textContent = 'Itni mehnat karne se acha mirror mein dekh lo 🪞';
+    btn.style.left = Math.random()*maxLeft + 'px';
+    btn.style.top = Math.random()*maxTop + 'px';
+  } else if(photoRevealStage === 3){
+    btn.textContent = 'Theek hai theek hai, lo dekh lo 😩';
+    btn.style.left = 'calc(50% - 110px)';
+    btn.style.top = '60px';
+  } else {
+    goTo('3d');
+  }
+}
 /* ======= Screen 5: Balloon game ======= */
 let gameActive = false;
 let gScore = 0;
@@ -1940,6 +2284,23 @@ function resetAll(){
   renderSweetOptions();
 
   clearDraw();
+  chatIndex = 0;
+  document.getElementById('chatWrap').innerHTML = '';
+  document.getElementById('chatStartBtn').style.display = 'inline-block';
+  document.getElementById('chatNextBtn').style.display = 'none';
+  teaseStep = 0;
+  document.getElementById('teaseLine2').style.display = 'none';
+  document.getElementById('teaseLine3').style.display = 'none';
+  document.getElementById('teaseLine4').style.display = 'none';
+  document.getElementById('teaseNextBtn').style.display = 'inline-block';
+  document.getElementById('teaseNextBtn').textContent = 'Aur batao';
+  document.getElementById('teasePopup').style.display = 'none';
+
+  photoRevealStage = 0;
+  const photoBtn = document.getElementById('photoRevealBtn');
+  photoBtn.textContent = 'Dekhna chahti?';
+  photoBtn.style.top = '60px';
+  photoBtn.style.left = 'calc(50% - 100px)';
   const audio1 = document.getElementById('audio1');
   if (audio1) {
     audio1.pause();
