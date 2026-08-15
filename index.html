@@ -977,7 +977,8 @@ body:not(.countdown-active) #countdownScreen {
     <p class="utility" style="font-size:14px;">kabhi kabhi tareef maangna padta hai pr phir v nhi milta...🫣</p>
     <div class="chat-wrap" id="chatWrap"></div>
     <button id="chatStartBtn" onclick="startRoastChat()">Chat shuru karo</button>
-    <button id="chatNextBtn" onclick="goTo(4)" style="display:none;">Aage badho →</button>
+    <br>
+   <button id="chatNextBtn" onclick="goTo(4)">Aage badho →</button>
   </div>
 </section>
   <!-- 4: PRANK BUTTON -->
@@ -1433,9 +1434,6 @@ function removeTypingIndicator(){
 
 function playNextRoastMessage(){
   if(chatIndex >= roastChat.length){
-    setTimeout(()=>{
-      document.getElementById('chatNextBtn').style.display = 'inline-block';
-    }, 500);
     return;
   }
 
